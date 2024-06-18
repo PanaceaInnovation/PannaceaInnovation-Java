@@ -10,6 +10,19 @@ public class Cadastro {
     private int matricula;
     private String email;
     private String senha;
+    private Boolean autoridade; // Colocar no modelo UML
+
+    // Constructor (Usar o set para definir o constructor SEMPRE que tiver uma condição para atribuir a variavel)
+
+    public Cadastro(String nome, String apelido, String cpf, int matricula, String email, String senha, Boolean autoridade){
+        this.nome = nome;
+        this.apelido = apelido;
+        setCpf(cpf);
+        setMatricula(matricula);
+        this.email = email;
+        this.senha = senha;
+        this.autoridade = autoridade;
+    }
 
     //Getters & Setters
     public String getNome() {
@@ -48,7 +61,7 @@ public class Cadastro {
     public void setMatricula(int matricula) {
         try {
             if(matricula >= 40000 && matricula <= 551999){
-                this.matricula = matricula; // Fazer matricula faculdade aqui
+                this.matricula = matricula;
             }else{
                 throw new Exception("MATRÍCULA INVÁLIDO!");
             }
@@ -72,6 +85,17 @@ public class Cadastro {
         this.senha = senha;
     }
 
+    public Boolean getAutoridade() {
+        return autoridade;
+    }
+    public void setAutoridade(Boolean autoridade) {
+        if(validaAutoridade(matricula)){
+            this.autoridade = true;
+        }else{
+            this.autoridade = false;
+        }
+    }
+
     public boolean validaCPF(String cpf){
         if (cpf.length() != 11) {
             return false;
@@ -83,5 +107,13 @@ public class Cadastro {
             }
         }
         return true;
+    }
+
+    public boolean validaAutoridade(int matricula){ // COLOCAR ISSO NO MODELO UML
+        if(matricula >= 40000 && matricula <= 60000){
+            return true;
+        }else{
+            return false;
+        }
     }
 }

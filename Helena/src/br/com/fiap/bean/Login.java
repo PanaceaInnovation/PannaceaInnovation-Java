@@ -3,10 +3,13 @@ package br.com.fiap.bean;
 import javax.swing.JOptionPane;
 
 public class Login extends Cadastro {
+    public Login(String nome, String apelido, String cpf, int matricula, String email, String senha, Boolean autoridade) {
+        super(nome, apelido, cpf, matricula, email, senha, autoridade);
+    }
 
     public boolean validaLogin(int matricula, String senha){
         try {
-            if(matricula == getMatricula() && senha.equals(getSenha())){
+            if(matricula == super.getMatricula() && senha.equals(super.getSenha())){
                 return true;
             }else{
                 throw new Exception("CREDENCIAIS INVÁLIDAS!");
