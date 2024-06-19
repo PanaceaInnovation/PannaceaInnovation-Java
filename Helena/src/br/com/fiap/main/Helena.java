@@ -9,27 +9,85 @@ import br.com.fiap.bean.Login;
 public class Helena {
     public static void main(String[] args) {
         // Atributos
-        String nome, apelido, cpf, email, senha;
-        int matricula;
+        String nome, apelido, cpf, email, senha, lgSenha;
+        int matricula, lgMatricula;
         String[] escolhas = {"Cadastro", "Login", "Sair"};
-        Boolean autoridade ,continua = true;
+        boolean autoridade,continua = true;
+        Cadastro cd = new Cadastro();
+        Login lg = new Login();
          
-        while(continua == true){
+        while(continua){
             try {
                 //Não se esquecer do break
                 int opcao = JOptionPane.showOptionDialog(null, "Bem vindo a Helena, escolha uma opção para continuar","Tela inicial", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, escolhas, escolhas[0]);
 
                 switch (opcao) {
-                    case 0:
+                    case 0: // CADASTRO
                         System.out.println("Cadastro");
-                        // não esquecer de instanciar e armazenar isso usando o setter
+                        nome = JOptionPane.showInputDialog("Digite seu nome completo:");
+                        cd.setNome(nome);
+
+                        apelido = JOptionPane.showInputDialog("Como gostaria de ser chamado: ");
+                        cd.setApelido(apelido);
+
+                        do{
+                            cpf = JOptionPane.showInputDialog("Digite seu CPF:");
+                            if (cd.validaCPF(cpf)) {
+                                cd.setCpf(cpf);
+                                break;
+                            }else {
+                                JOptionPane.showMessageDialog(null, "CPF INVÁLIDO: " + cpf);
+                            }
+                        } while (true);
+
+                        do{
+                            matricula = Integer.parseInt(JOptionPane.showInputDialog("Digite sua matrícula da instituição de ensino: "));
+                            if(cd.validaMatricula(matricula)){
+                                cd.setMatricula(matricula);
+                                break;
+                            }else{
+                                JOptionPane.showMessageDialog(null, "MATRÍCULA INVÁLIDA!");
+                            }
+                        }while(true);                        
+
+                        email = JOptionPane.showInputDialog("Digite seu email: ");
+                        cd.setEmail(email);
+
+                        do{
+                            senha = JOptionPane.showInputDialog("Crie uma senha para acesso: ");
+                            if(cd.validaSenha(senha)){
+                                cd.setSenha(senha);
+                                break;
+                            }else{
+                                JOptionPane.showMessageDialog(null, "SENHA DEVE SER MAIOR QUE 7 CARACTERES !");
+                            }
+                        }while(true);  
+
+                        autoridade = cd.validaAutoridade(matricula);
+                        cd.setAutoridade(autoridade);
+
+                        JOptionPane.showMessageDialog(null, "CADASTRO REALIZADO COM SUCESSO");
                         break;
-                    case 1:
+                    case 1: // LOGIN
                         System.out.println("login");
-                        // usar o getter para pegar as infos armazenadas
-                        break;
+
+                        do {
+                            lgMatricula = Integer.parseInt(JOptionPane.showInputDialog("Digite sua matrícula: "));
+
+                            lgSenha = JOptionPane.showInputDialog("Digite sua senha:");
+
+                            if(lg.validaLogin(lgMatricula, lgSenha)){
+                                System.out.println("Professor");
+                            }else{
+                                System.out.println("Aluno");
+                            }
+
+                            
+                        }while(true);
+
+                        //break;
                     case 2:
-                        System.out.println("Sair");
+                            JOptionPane.showMessageDialog(null, "Saindo do aplicativo....");
                         continua = false; // Se tirar isso entra em loop
                         break; // sem isso aparece escolha incorreta
                     default:
@@ -40,7 +98,8 @@ public class Helena {
                 JOptionPane.showMessageDialog(null, e.getMessage());
             }
         }      
-        JOptionPane.showMessageDialog(null, "Fim de programa. Volte sempre!");
+        JOptionPane.showMessageDialog(null, "Tchau Tchau " + cd.getNome() + ", bons estudos !"+ "\nAss: Helena"); // VER SE É NECESSARIO TIRAR O CD.GETNOME()
+
     }
     
 }

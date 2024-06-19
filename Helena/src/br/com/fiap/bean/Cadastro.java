@@ -10,11 +10,12 @@ public class Cadastro {
     private int matricula;
     private String email;
     private String senha;
-    private Boolean autoridade; // Colocar no modelo UML
+    private boolean autoridade; // Colocar no modelo UML
 
     // Constructor (Usar o set para definir o constructor SEMPRE que tiver uma condição para atribuir a variavel)
+    public Cadastro(){}
 
-    public Cadastro(String nome, String apelido, String cpf, int matricula, String email, String senha, Boolean autoridade){
+    public Cadastro(String nome, String apelido, String cpf, int matricula, String email, String senha, boolean autoridade){
         this.nome = nome;
         this.apelido = apelido;
         setCpf(cpf);
@@ -51,7 +52,6 @@ public class Cadastro {
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
-            System.exit(0);
         }        
     }
 
@@ -60,14 +60,13 @@ public class Cadastro {
     }
     public void setMatricula(int matricula) {
         try {
-            if(matricula >= 40000 && matricula <= 551999){
+            if(validaMatricula(matricula)){
                 this.matricula = matricula;
             }else{
                 throw new Exception("MATRÍCULA INVÁLIDO!");
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
-            System.exit(0);
         }
     }
 
@@ -82,10 +81,18 @@ public class Cadastro {
         return senha;
     }
     public void setSenha(String senha) {
-        this.senha = senha;
+        try {
+            if(validaSenha(senha)){
+                this.senha = senha;
+            }else{
+                throw new Exception("SENHA DEVE SER MAIOR QUE 7 CARACTERES !");
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
     }
 
-    public Boolean getAutoridade() {
+    public boolean getAutoridade() {
         return autoridade;
     }
     public void setAutoridade(Boolean autoridade) {
@@ -109,7 +116,24 @@ public class Cadastro {
         return true;
     }
 
-    public boolean validaAutoridade(int matricula){ // COLOCAR ISSO NO MODELO UML
+
+    public boolean validaMatricula(int matricula){
+        if(matricula >= 40000 && matricula <= 551999){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    public boolean validaSenha(String senha){
+        if(senha.length() >= 8){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    public boolean validaAutoridade(int matricula){
         if(matricula >= 40000 && matricula <= 60000){
             return true;
         }else{
