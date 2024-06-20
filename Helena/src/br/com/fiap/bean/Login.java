@@ -1,11 +1,10 @@
 package br.com.fiap.bean;
 
-import javax.swing.JOptionPane;
 
-public class Login extends Cadastro {
+public class Login{
 
-    private int verificaMatricula; // Colocar no modelo uml
-    private String verificaSenha; // Colocar no modelo uml
+    private int verificaMatricula; 
+    private String verificaSenha; 
 
     public Login(){}
 
@@ -27,7 +26,6 @@ public class Login extends Cadastro {
         if(lgMatricula == getVerificaMatricula() && lgSenha.equals(getVerificaSenha())){
             return true;
         }else{
-            JOptionPane.showMessageDialog(null, "CREDENCIAIS INVÁLIDAS!");
             return false;
         }
     }

@@ -4,6 +4,7 @@ import javax.swing.JOptionPane;
 
 // imports
 import br.com.fiap.bean.Cadastro;
+import br.com.fiap.bean.Boletim;
 import br.com.fiap.bean.Login;
 
 public class Helena {
@@ -12,9 +13,12 @@ public class Helena {
         String nome, apelido, cpf, email, senha, lgSenha;
         int matricula, lgMatricula;
         String[] escolhas = {"Cadastro", "Login", "Sair"};
+        String[] opcoesLogin = {"Evolução", "Testes", "Revisar", "Ranking", "Psicologia", "Sair"};
         boolean autoridade,continua = true;
+
         Cadastro cd = new Cadastro();
         Login lg = new Login();
+        Boletim bl = new Boletim();
          
         while(continua){
             try {
@@ -80,18 +84,100 @@ public class Helena {
                             lgSenha = JOptionPane.showInputDialog("Digite sua senha:");
 
                             if(lg.validaLogin(lgMatricula, lgSenha)){
-                                System.out.println("Professor");
+                                JOptionPane.showMessageDialog(null, "LOGIN REALIZADO COM SUCESSO");
+                                if(cd.getAutoridade()){
+                                    do {                                    
+                                        System.out.println("Hello professor"); // TIRAR DEPOIS DE FINALIZADO
+                                        // FAZER CASE DAQUI PARA BAIXO PARA ACESSO DE PROFESSOR.
+                                        int opcoes = JOptionPane.showOptionDialog(null, "Bem vindo " + cd.getNome()+ ".Como posso lhe ajudar hoje?","Tela inicial", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, opcoesLogin, opcoesLogin[0]);
+
+                                        switch (opcoes) {
+                                            case 0:
+
+                                            System.out.println("Hello");
+                                                // Fazer opção de boletim de alunos com base na media de cada um. Pode criar nomes ou usar os nossos e atribuir medias para os alunos. baixa, media e alta
+
+                                            break; // NECESSARIO ESSE BREAK PARA NÃO FINALIZAR O APP E VOLTAR AS OPÇOES INICIAIS DO LOGIN
+                                            
+                                            case 1:
+                                                // Classe de professor que mostra quais alunos necessitam fazer os testes. Pode fazer de modo aleatorio. uns com nenhum, mais ou menos e um com todos
+
+                                                break; // NECESSARIO ESSE BREAK PARA NÃO FINALIZAR O APP E VOLTAR AS OPÇOES INICIAIS DO LOGIN
+
+                                            case 2:
+                                                // classe que mostra ao professor quais as recomendações aos alunos de determinada materia, necessario revisão ou ok.
+
+                                                break; // NECESSARIO ESSE BREAK PARA NÃO FINALIZAR O APP E VOLTAR AS OPÇOES INICIAIS DO LOGIN
+
+                                            case 3:
+                                                // Classe de professor todos no ranking, independente se quis participar ou não. Mas ter uma coisa do lado do nome da pessoa (Particpando do ranking: Não ou Sim)
+
+                                                break; // NECESSARIO ESSE BREAK PARA NÃO FINALIZAR O APP E VOLTAR AS OPÇOES INICIAIS DO LOGIN
+
+                                            case 4:
+                                                // Igualmente para professor, eles tambem precisão de psicologos
+                                                // Mostrar opções de psicologos para atendimento via tele medicina, quando clicar no psicologo apresentar na tela "Concetando com o psicolgo ...." 
+
+                                                break; // NECESSARIO ESSE BREAK PARA NÃO FINALIZAR O APP E VOLTAR AS OPÇOES INICIAIS DO LOGIN
+
+                                            case 5:
+                                                JOptionPane.showMessageDialog(null, "Saindo do aplicativo....");
+                                                continua = false; // Se tirar isso entra em loop
+                                                break; // sem isso aparece escolha incorreta
+                                            default:
+                                                throw new Exception("Escolha incorreta");
+                                        }
+                                    } while (continua);
+                                }else{
+                                    do {                                    
+                                        System.out.println("hello aluno"); // TIRAR DEPOIS DE FINALIZADO
+
+                                        // FAZER CASE DAQUI PARA BAIXO PARA ACESSO DE ALUNO.
+                                        int opcoes = JOptionPane.showOptionDialog(null, "Bem vindo " + cd.getNome()+ ".Como posso lhe ajudar hoje?","Tela inicial", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, opcoesLogin, opcoesLogin[0]);
+
+                                        switch (opcoes) {
+                                            case 0:
+                                                JOptionPane.showMessageDialog(null, bl.mostrarBoletim());
+                                                break;
+                                            
+                                            case 1:
+                                                // Testes e dentro da classe testes uma opção para uma classe de testes concluidos
+
+                                                break; // NECESSARIO ESSE BREAK PARA NÃO FINALIZAR O APP E VOLTAR AS OPÇOES INICIAIS DO LOGIN
+
+                                            case 2:
+                                                // Uma classe que mostra materias que aconselhamos o aluno estudar
+
+                                                break; // NECESSARIO ESSE BREAK PARA NÃO FINALIZAR O APP E VOLTAR AS OPÇOES INICIAIS DO LOGIN
+
+                                            case 3:
+                                                // Classe que mostra o ranking da sala, mas antes de mostrar o ranking perguntar sempre se deseja participar. Caso a pessoa não aceite mostrar em tela que o ranking esta desabilitado e voltar ao inicio. caso aperte a opção novamente perguntar se quer particpar e se sim, mostrar o ranking com uma quantidade de pessoas com pontuação baseada no tempo de conclusão da simulação.
+
+                                                break; // NECESSARIO ESSE BREAK PARA NÃO FINALIZAR O APP E VOLTAR AS OPÇOES INICIAIS DO LOGIN
+                                            
+                                            case 4:
+                                                // Mostrar opções de psicologos para atendimento via tele medicina, quando clicar no psicologo apresentar na tela "Concetando com o psicolgo ...."
+
+                                                break; // NECESSARIO ESSE BREAK PARA NÃO FINALIZAR O APP E VOLTAR AS OPÇOES INICIAIS DO LOGIN
+
+                                            case 5:
+                                                JOptionPane.showMessageDialog(null, "Saindo do aplicativo....");
+                                                continua = false; // Se tirar isso entra em loop
+                                                break; // sem isso aparece escolha incorreta
+                                            default:
+                                                throw new Exception("Escolha incorreta");
+                                        }
+                                    } while (continua);
+                                }
                                 break;
                             }else{
-                                System.out.println("Aluno");
+                                JOptionPane.showMessageDialog(null, "CREDENCIAIS INVÁLIDAS!");
                                 break;
                             }               
                         }while(true);
-                        
-                        JOptionPane.showMessageDialog(null, "LOGIN REALIZADO COM SUCESSO");
                         break;
                     case 2:
-                            JOptionPane.showMessageDialog(null, "Saindo do aplicativo....");
+                        JOptionPane.showMessageDialog(null, "Saindo do aplicativo....");
                         continua = false; // Se tirar isso entra em loop
                         break; // sem isso aparece escolha incorreta
                     default:
@@ -102,7 +188,7 @@ public class Helena {
                 JOptionPane.showMessageDialog(null, e.getMessage());
             }
         }      
-        JOptionPane.showMessageDialog(null, "Tchau Tchau " + cd.getNome() + ", bons estudos !"+ "\nAss: Helena"); // VER SE É NECESSARIO TIRAR O CD.GETNOME()
+        JOptionPane.showMessageDialog(null, "Tchau Tchau e bons estudos !"+ "\nAss: Helena");
 
     }
     

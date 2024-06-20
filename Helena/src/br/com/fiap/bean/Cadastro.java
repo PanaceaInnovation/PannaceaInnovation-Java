@@ -134,7 +134,7 @@ public class Cadastro {
     }
 
     public boolean validaAutoridade(int matricula){
-        if(matricula >= 40000 && matricula <= 60000){
+        if(matricula >= 40000 && matricula <= 70000){
             return true;
         }else{
             return false;
