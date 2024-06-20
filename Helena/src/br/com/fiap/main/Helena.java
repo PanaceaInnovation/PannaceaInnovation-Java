@@ -72,20 +72,24 @@ public class Helena {
                         System.out.println("login");
 
                         do {
+                            lg.setVerificaMatricula(cd.getMatricula());
+                            lg.setVerificaSenha(cd.getSenha());
+
                             lgMatricula = Integer.parseInt(JOptionPane.showInputDialog("Digite sua matrícula: "));
 
                             lgSenha = JOptionPane.showInputDialog("Digite sua senha:");
 
                             if(lg.validaLogin(lgMatricula, lgSenha)){
                                 System.out.println("Professor");
+                                break;
                             }else{
                                 System.out.println("Aluno");
-                            }
-
-                            
+                                break;
+                            }               
                         }while(true);
-
-                        //break;
+                        
+                        JOptionPane.showMessageDialog(null, "LOGIN REALIZADO COM SUCESSO");
+                        break;
                     case 2:
                             JOptionPane.showMessageDialog(null, "Saindo do aplicativo....");
                         continua = false; // Se tirar isso entra em loop
