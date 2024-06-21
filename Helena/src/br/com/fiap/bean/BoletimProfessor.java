@@ -4,9 +4,11 @@ public class BoletimProfessor extends Boletim {
     public BoletimProfessor(){}
 
     
-    public String[] Teste(){
-        String[] teste1 = super.getMaterias();
+    public String[] materias(){
+        String[] materias = super.getMaterias();
 
-        return teste1;
+        return materias;
     }
+
+
 }

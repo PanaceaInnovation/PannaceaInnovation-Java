@@ -14,7 +14,7 @@ public class Helena {
         String nome, apelido, cpf, email, senha, lgSenha;
         int matricula, lgMatricula;
         String[] escolhas = {"Cadastro", "Login", "Sair"};
-        String[] opcoesLogin = {"Evolução", "Testes", "Revisar", "Ranking", "Psicologia", "Sair"};
+        String[] opcoesLogin = {"Boletim", "Testes", "Revisar", "Ranking", "Psicologia", "Sair"};
         boolean autoridade,continua = true;
 
         Cadastro cd = new Cadastro();
@@ -89,22 +89,39 @@ public class Helena {
                                 JOptionPane.showMessageDialog(null, "LOGIN REALIZADO COM SUCESSO");
                                 if(cd.getAutoridade()){
                                     do {                                    
-                                        System.out.println("Hello professor"); // TIRAR DEPOIS DE FINALIZADO
-                                        // FAZER CASE DAQUI PARA BAIXO PARA ACESSO DE PROFESSOR.
                                         int opcoes = JOptionPane.showOptionDialog(null, "Bem vindo " + cd.getNome()+ ". Como posso lhe ajudar hoje?","Tela inicial", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, opcoesLogin, opcoesLogin[0]);
 
                                         switch (opcoes) {
                                             case 0:
+                                                int opcaoPF = JOptionPane.showOptionDialog(null, "Quais notas gostaria de ver:","Tela inicial", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, blp.materias(), blp.materias()[0]);
 
-                                            System.out.println("Hello");
-                                            System.out.println(blp.getMaterias()[1]); // necessario colocar o index
-                                            
-                                                // Fazer opção de boletim de alunos com base na media de cada um. Pode criar nomes ou usar os nossos e atribuir medias para os alunos. baixa, media e alta
+                                                switch (opcaoPF) {
+                                                    case 0:
+                                                        String materia1 = ("Média dos alunos em anatomia e Fisiologia Aplicadas à Laparoscopia\n" + "Vitor Hugo: 5.70 - Felipe Arnus: 9.5 - Leticia Resina: 7.7 - João Vieira: 10 - João Chambrone: 7.0");
+                                                        JOptionPane.showMessageDialog(null, materia1);
+                                                        break;
 
-                                            break; // NECESSARIO ESSE BREAK PARA NÃO FINALIZAR O APP E VOLTAR AS OPÇOES INICIAIS DO LOGIN
+                                                    case 1:
+                                                        String materia2 = ("Média dos alunos em Fundamentos da Cirurgia Laparoscópica\n" + "Vitor Hugo: 8.0 - Felipe Arnus: 6.5 - Leticia Resina: 10 - João Vieira: 4.6 - João Chambrone: 8.5");
+                                                        JOptionPane.showMessageDialog(null, materia2);
+                                                        break;
+                                                    case 2:
+                                                        String materia3 = ("Média dos alunos em equipamentos e Instrumentação\n" + "Vitor Hugo: 7.6 - Felipe Arnus: 5.5 - Leticia Resina: 9.8 - João Vieira: 6.5 - João Chambrone: 9.5");
+                                                        JOptionPane.showMessageDialog(null, materia3);
+                                                        break;
+                                                    case 3:
+                                                        String materia4 = ("Média dos alunos em técnicas Básicas de Laparoscopia\n" + "Vitor Hugo: 8.0 - Felipe Arnus: 10 - Leticia Resina: 10 - João Vieira: 6.6 - João Chambrone: 9.5");
+                                                        JOptionPane.showMessageDialog(null, materia4);
+                                                        break;
+                                                    default:
+                                                        String erro = "5 Escolha incorreta";
+                                                        System.out.println(erro);}
+                                                break;
                                             
                                             case 1:
                                                 // Classe de professor que mostra quais alunos necessitam fazer os testes. Pode fazer de modo aleatorio. uns com nenhum, mais ou menos e um com todos
+
+
 
                                                 break; // NECESSARIO ESSE BREAK PARA NÃO FINALIZAR O APP E VOLTAR AS OPÇOES INICIAIS DO LOGIN
 
