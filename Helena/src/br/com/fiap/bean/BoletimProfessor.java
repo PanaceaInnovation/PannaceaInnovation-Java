@@ -5,9 +5,7 @@ public class BoletimProfessor extends Boletim {
 
     
     public String[] materias(){
-        String[] materias = super.getMaterias();
-
-        return materias;
+        return super.getMaterias();
     }
 
 

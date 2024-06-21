@@ -10,6 +10,8 @@ import br.com.fiap.bean.Login;
 import br.com.fiap.bean.Teste;
 import br.com.fiap.bean.TestesProfessor;
 import br.com.fiap.bean.Revisar;
+import br.com.fiap.bean.RevisarProfessor;
+import br.com.fiap.bean.Ranking;
 import br.com.fiap.bean.Psicologia;
 
 
@@ -29,6 +31,8 @@ public class Helena {
         Teste ts = new Teste();
         TestesProfessor tsp = new TestesProfessor();
         Revisar rv = new Revisar();
+        RevisarProfessor rp = new RevisarProfessor();
+        Ranking rk = new Ranking();
         Psicologia ps = new Psicologia();
          
         while(continua){
@@ -149,12 +153,37 @@ public class Helena {
                                                 break; // NECESSARIO ESSE BREAK PARA NÃO FINALIZAR O APP E VOLTAR AS OPÇOES INICIAIS DO LOGIN
 
                                             case 2:
-                                                // classe que mostra ao professor quais as recomendações aos alunos de determinada materia, necessario revisão ou ok.
+                                                int opcaoRevisao = JOptionPane.showOptionDialog(null, "Selecione a opção de revisão que deseja ver:", "Tela de Revisão", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, rp.materias(), rp.materias()[0]);
+
+                                                switch (opcaoRevisao) {
+                                                    case 0:
+                                                        String revisaoMateria1 = rp.mostrarRevisaoProfessor();
+                                                        JOptionPane.showMessageDialog(null, revisaoMateria1);
+                                                        break;
+                                                
+                                                    case 1:
+                                                        String revisaoMateria2 = rp.mostrarRevisaoProfessor();
+                                                        JOptionPane.showMessageDialog(null, revisaoMateria2);
+                                                        break;
+                                                
+                                                    case 2:
+                                                        String revisaoMateria3 = rp.mostrarRevisaoProfessor();
+                                                        JOptionPane.showMessageDialog(null, revisaoMateria3);
+                                                        break;
+                                                
+                                                    case 3:
+                                                        String revisaoMateria4 = rp.mostrarRevisaoProfessor();
+                                                        JOptionPane.showMessageDialog(null, revisaoMateria4);
+                                                        break;
+                                                
+                                                    default:
+                                                        JOptionPane.showMessageDialog(null, "Escolha incorreta");}
 
                                                 break; // NECESSARIO ESSE BREAK PARA NÃO FINALIZAR O APP E VOLTAR AS OPÇOES INICIAIS DO LOGIN
 
                                             case 3:
-                                                // Classe de professor todos no ranking, independente se quis participar ou não. Mas ter uma coisa do lado do nome da pessoa (Particpando do ranking: Não ou Sim)
+                                                String rankingAlunos = rk.mostrarRanking();
+                                                JOptionPane.showMessageDialog(null, rankingAlunos);
 
                                                 break; // NECESSARIO ESSE BREAK PARA NÃO FINALIZAR O APP E VOLTAR AS OPÇOES INICIAIS DO LOGIN
 
@@ -180,24 +209,20 @@ public class Helena {
                                             case 0:
                                                 JOptionPane.showMessageDialog(null, bl.mostrarBoletim());
                                                 break;
-                                            
                                             case 1:
                                                 JOptionPane.showMessageDialog(null, ts.mostrarTestes());
                                                 break;
-
                                             case 2:
                                                 JOptionPane.showMessageDialog(null, rv.mostrarRevisao());
-
                                                 break;
-
                                             case 3:
-                                                // Classe que mostra o ranking da sala, mas antes de mostrar o ranking perguntar sempre se deseja participar. Caso a pessoa não aceite mostrar em tela que o ranking esta desabilitado e voltar ao inicio. caso aperte a opção novamente perguntar se quer particpar e se sim, mostrar o ranking com uma quantidade de pessoas com pontuação baseada no tempo de conclusão da simulação.
-
-                                                break; // NECESSARIO ESSE BREAK PARA NÃO FINALIZAR O APP E VOLTAR AS OPÇOES INICIAIS DO LOGIN
+                                                String rankingAlunos = rk.mostrarRanking();
+                                                JOptionPane.showMessageDialog(null, rankingAlunos);
+                                                break; 
                                             
                                             case 4:
                                                 JOptionPane.showMessageDialog(null, ps.exibePsicologos());
-                                                break; // NECESSARIO ESSE BREAK PARA NÃO FINALIZAR O APP E VOLTAR AS OPÇOES INICIAIS DO LOGIN
+                                                break;
 
                                             case 5:
                                                 JOptionPane.showMessageDialog(null, "Saindo do aplicativo....");
