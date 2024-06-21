@@ -7,9 +7,11 @@ import br.com.fiap.bean.Cadastro;
 import br.com.fiap.bean.Boletim;
 import br.com.fiap.bean.BoletimProfessor;
 import br.com.fiap.bean.Login;
-import br.com.fiap.bean.Psicologia;
 import br.com.fiap.bean.Teste;
 import br.com.fiap.bean.TestesProfessor;
+import br.com.fiap.bean.Revisar;
+import br.com.fiap.bean.Psicologia;
+
 
 public class Helena {
     public static void main(String[] args) {
@@ -26,6 +28,7 @@ public class Helena {
         BoletimProfessor blp = new BoletimProfessor();
         Teste ts = new Teste();
         TestesProfessor tsp = new TestesProfessor();
+        Revisar rv = new Revisar();
         Psicologia ps = new Psicologia();
          
         while(continua){
@@ -183,9 +186,9 @@ public class Helena {
                                                 break;
 
                                             case 2:
-                                                // Uma classe que mostra materias que aconselhamos o aluno estudar
+                                                JOptionPane.showMessageDialog(null, rv.mostrarRevisao());
 
-                                                break; // NECESSARIO ESSE BREAK PARA NÃO FINALIZAR O APP E VOLTAR AS OPÇOES INICIAIS DO LOGIN
+                                                break;
 
                                             case 3:
                                                 // Classe que mostra o ranking da sala, mas antes de mostrar o ranking perguntar sempre se deseja participar. Caso a pessoa não aceite mostrar em tela que o ranking esta desabilitado e voltar ao inicio. caso aperte a opção novamente perguntar se quer particpar e se sim, mostrar o ranking com uma quantidade de pessoas com pontuação baseada no tempo de conclusão da simulação.
