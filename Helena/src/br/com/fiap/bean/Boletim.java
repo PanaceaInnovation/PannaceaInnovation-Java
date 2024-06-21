@@ -3,8 +3,15 @@ package br.com.fiap.bean;
 import javax.swing.JOptionPane;
 
 public class Boletim {
-    String[] materias = {"Anatomia e Fisiologia Aplicadas à Laparoscopia", "Fundamentos da Cirurgia Laparoscópica", "\nEquipamentos e Instrumentação", "Técnicas Básicas de Laparoscopia"};
+    private String[] materias = {"Anatomia e Fisiologia Aplicadas à Laparoscopia", "Fundamentos da Cirurgia Laparoscópica", "\nEquipamentos e Instrumentação", "Técnicas Básicas de Laparoscopia"};
     public Boletim(){}
+
+    public String[] getMaterias() {
+        return materias;
+    }
+    public void setMaterias(String[] materias) {
+        this.materias = materias;
+    }
 
     public String mostrarBoletim(){
         int opcao = JOptionPane.showOptionDialog(null, "Bem vindo a Helena, escolha uma opção para continuar","Tela inicial", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, materias, materias[0]);

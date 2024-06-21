@@ -5,6 +5,7 @@ import javax.swing.JOptionPane;
 // imports
 import br.com.fiap.bean.Cadastro;
 import br.com.fiap.bean.Boletim;
+import br.com.fiap.bean.BoletimProfessor;
 import br.com.fiap.bean.Login;
 
 public class Helena {
@@ -19,6 +20,7 @@ public class Helena {
         Cadastro cd = new Cadastro();
         Login lg = new Login();
         Boletim bl = new Boletim();
+        BoletimProfessor blp = new BoletimProfessor();
          
         while(continua){
             try {
@@ -89,12 +91,14 @@ public class Helena {
                                     do {                                    
                                         System.out.println("Hello professor"); // TIRAR DEPOIS DE FINALIZADO
                                         // FAZER CASE DAQUI PARA BAIXO PARA ACESSO DE PROFESSOR.
-                                        int opcoes = JOptionPane.showOptionDialog(null, "Bem vindo " + cd.getNome()+ ".Como posso lhe ajudar hoje?","Tela inicial", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, opcoesLogin, opcoesLogin[0]);
+                                        int opcoes = JOptionPane.showOptionDialog(null, "Bem vindo " + cd.getNome()+ ". Como posso lhe ajudar hoje?","Tela inicial", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, opcoesLogin, opcoesLogin[0]);
 
                                         switch (opcoes) {
                                             case 0:
 
                                             System.out.println("Hello");
+                                            System.out.println(blp.getMaterias()[1]); // necessario colocar o index
+                                            
                                                 // Fazer opção de boletim de alunos com base na media de cada um. Pode criar nomes ou usar os nossos e atribuir medias para os alunos. baixa, media e alta
 
                                             break; // NECESSARIO ESSE BREAK PARA NÃO FINALIZAR O APP E VOLTAR AS OPÇOES INICIAIS DO LOGIN

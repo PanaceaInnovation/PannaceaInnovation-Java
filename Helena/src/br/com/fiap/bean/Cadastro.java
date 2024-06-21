@@ -2,7 +2,7 @@ package br.com.fiap.bean;
 
 import javax.swing.JOptionPane;
 
-public class Cadastro {
+public class Cadastro{
     // Atributos
     private String nome;
     private String apelido;
@@ -10,7 +10,7 @@ public class Cadastro {
     private int matricula;
     private String email;
     private String senha;
-    private boolean autoridade; // Colocar no modelo UML
+    private boolean autoridade; 
 
     // Constructor (Usar o set para definir o constructor SEMPRE que tiver uma condição para atribuir a variavel)
     public Cadastro(){}
