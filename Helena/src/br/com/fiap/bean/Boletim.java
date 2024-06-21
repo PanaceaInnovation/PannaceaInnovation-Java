@@ -18,7 +18,7 @@ public class Boletim {
 
         switch (opcao) {
             case 0:
-                String notaMateria1 = ("Anatomia e Fisiologia Aplicadas à Laparoscopia\n" + "1ª Avaliação: 9.0 - " + "2ª Avaliação 2: 5.0" + " - 3ª Avaliação 3: 7.5");
+                String notaMateria1 = "Anatomia e Fisiologia Aplicadas à Laparoscopia\n" + "1ª Avaliação: 9.0 - " + "2ª Avaliação: 5.0" + " - 3ª Avaliação: 7.5";
                 return notaMateria1;
             case 1:
                 String notaMateria2 = "Fundamentos da Cirurgia Laparoscópica\n" + "1ª Avaliação: 7.0 - " + "2ª Avaliação: 8.0" + " - 3ª Avaliação: 8.5";

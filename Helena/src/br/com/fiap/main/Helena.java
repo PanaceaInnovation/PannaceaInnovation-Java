@@ -7,6 +7,9 @@ import br.com.fiap.bean.Cadastro;
 import br.com.fiap.bean.Boletim;
 import br.com.fiap.bean.BoletimProfessor;
 import br.com.fiap.bean.Login;
+import br.com.fiap.bean.Psicologia;
+import br.com.fiap.bean.Teste;
+import br.com.fiap.bean.TestesProfessor;
 
 public class Helena {
     public static void main(String[] args) {
@@ -21,6 +24,9 @@ public class Helena {
         Login lg = new Login();
         Boletim bl = new Boletim();
         BoletimProfessor blp = new BoletimProfessor();
+        Teste ts = new Teste();
+        TestesProfessor tsp = new TestesProfessor();
+        Psicologia ps = new Psicologia();
          
         while(continua){
             try {
@@ -119,10 +125,24 @@ public class Helena {
                                                 break;
                                             
                                             case 1:
-                                                // Classe de professor que mostra quais alunos necessitam fazer os testes. Pode fazer de modo aleatorio. uns com nenhum, mais ou menos e um com todos
+                                                int opcaoTSP = JOptionPane.showOptionDialog(null, "Quais testes gostaria de ver:","Tela inicial", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, tsp.testes(), tsp.testes()[0]);
 
-
-
+                                                switch (opcaoTSP) {
+                                                    case 0:
+                                                        String teste1 = ("Testes dos alunos em Procedimentos Laparoscópicos Comuns\n" + "Vitor Hugo: A1: Concluído - A2: Concluído - A3: Concluído \nFelipe Arnus: A1: Pendente - A2: Pendente - A3: Concluído \nLeticia Resina: A1: Concluído - A2: Pendente - A3: Concluído \nJoão Vieira: A1: Pendente - A2: Pendente - A3: Concluído \nJoão Chambrone: A1: Concluído - A2: Concluído - A3: Pendente");
+                                                        JOptionPane.showMessageDialog(null, teste1);
+                                                        break;
+                                                    case 1:
+                                                        String teste2 = ("Testes dos alunos em Complicações e Gestão de Riscos\n" + "Vitor Hugo: A1: Concluído - A2: Concluído - A3: Concluído \nFelipe Arnus: A1: Pendente - A2: Pendente - A3: Concluído \nLeticia Resina: A1: Concluído - A2: Pendente - A3: Concluído \nJoão Vieira: A1: Pendente - A2: Pendente - A3: Concluído \nJoão Chambrone: A1: Concluído - A2: Concluído - A3: Pendente");
+                                                        JOptionPane.showMessageDialog(null, teste2);
+                                                        break;
+                                                    case 2:
+                                                        String teste3 = ("Testes dos alunos em Treinamento em Simuladores e Prática em Laboratório\n" + "Vitor Hugo: A1: Concluído - A2: Concluído - A3: Concluído \nFelipe Arnus: A1: Pendente - A2: Pendente - A3: Concluído \nLeticia Resina: A1: Concluído - A2: Pendente - A3: Concluído \nJoão Vieira: A1: Pendente - A2: Pendente - A3: Concluído \nJoão Chambrone: A1: Concluído - A2: Concluído - A3: Pendente");
+                                                        JOptionPane.showMessageDialog(null, teste3);
+                                                        break;
+                                                    default:
+                                                        String erro = "Escolha incorreta";
+                                                        System.out.println(erro);}
                                                 break; // NECESSARIO ESSE BREAK PARA NÃO FINALIZAR O APP E VOLTAR AS OPÇOES INICIAIS DO LOGIN
 
                                             case 2:
@@ -136,8 +156,7 @@ public class Helena {
                                                 break; // NECESSARIO ESSE BREAK PARA NÃO FINALIZAR O APP E VOLTAR AS OPÇOES INICIAIS DO LOGIN
 
                                             case 4:
-                                                // Igualmente para professor, eles tambem precisão de psicologos
-                                                // Mostrar opções de psicologos para atendimento via tele medicina, quando clicar no psicologo apresentar na tela "Concetando com o psicolgo ...." 
+                                                JOptionPane.showMessageDialog(null, ps.exibePsicologos()); 
 
                                                 break; // NECESSARIO ESSE BREAK PARA NÃO FINALIZAR O APP E VOLTAR AS OPÇOES INICIAIS DO LOGIN
 
@@ -150,10 +169,8 @@ public class Helena {
                                         }
                                     } while (continua);
                                 }else{
-                                    do {                                    
-                                        System.out.println("hello aluno"); // TIRAR DEPOIS DE FINALIZADO
+                                    do { 
 
-                                        // FAZER CASE DAQUI PARA BAIXO PARA ACESSO DE ALUNO.
                                         int opcoes = JOptionPane.showOptionDialog(null, "Bem vindo " + cd.getNome()+ ".Como posso lhe ajudar hoje?","Tela inicial", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, opcoesLogin, opcoesLogin[0]);
 
                                         switch (opcoes) {
@@ -162,9 +179,8 @@ public class Helena {
                                                 break;
                                             
                                             case 1:
-                                                // Testes e dentro da classe testes uma opção para uma classe de testes concluidos
-
-                                                break; // NECESSARIO ESSE BREAK PARA NÃO FINALIZAR O APP E VOLTAR AS OPÇOES INICIAIS DO LOGIN
+                                                JOptionPane.showMessageDialog(null, ts.mostrarTestes());
+                                                break;
 
                                             case 2:
                                                 // Uma classe que mostra materias que aconselhamos o aluno estudar
@@ -177,8 +193,7 @@ public class Helena {
                                                 break; // NECESSARIO ESSE BREAK PARA NÃO FINALIZAR O APP E VOLTAR AS OPÇOES INICIAIS DO LOGIN
                                             
                                             case 4:
-                                                // Mostrar opções de psicologos para atendimento via tele medicina, quando clicar no psicologo apresentar na tela "Concetando com o psicolgo ...."
-
+                                                JOptionPane.showMessageDialog(null, ps.exibePsicologos());
                                                 break; // NECESSARIO ESSE BREAK PARA NÃO FINALIZAR O APP E VOLTAR AS OPÇOES INICIAIS DO LOGIN
 
                                             case 5:
