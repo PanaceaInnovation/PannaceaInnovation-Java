@@ -1,4 +1,4 @@
-package br.com.fiap.main;
+package br.com.fiap.view;
 
 import javax.swing.JOptionPane;
 
