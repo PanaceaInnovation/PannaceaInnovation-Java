@@ -1,14 +1,17 @@
 package br.com.fiap.view;
 
+import java.sql.Connection;
+
 import javax.swing.JOptionPane;
 
-// imports
-import br.com.fiap.bean.Cadastro;
 import br.com.fiap.bean.Boletim;
 import br.com.fiap.bean.BoletimProfessor;
 import br.com.fiap.bean.Login;
 import br.com.fiap.bean.Teste;
 import br.com.fiap.bean.TestesProfessor;
+import br.com.fiap.model.dao.CadastroDAO;
+import br.com.fiap.model.dao.ConnectionFactory;
+import br.com.fiap.model.dto.Cadastro;
 import br.com.fiap.bean.Revisar;
 import br.com.fiap.bean.RevisarProfessor;
 import br.com.fiap.bean.Ranking;
@@ -17,6 +20,11 @@ import br.com.fiap.bean.Psicologia;
 
 public class Helena {
     public static void main(String[] args) {
+        //Conexão
+        Connection con = ConnectionFactory.abrirConexao();
+        CadastroDAO cadastroDAO = new CadastroDAO(con);
+        Cadastro cd = new Cadastro();
+
         // Atributos
         String nome, apelido, cpf, email, senha, lgSenha;
         int matricula, lgMatricula;
@@ -24,7 +32,7 @@ public class Helena {
         String[] opcoesLogin = {"Boletim", "Testes", "Revisar", "Ranking", "Psicologia", "Sair"};
         boolean autoridade,continua = true;
 
-        Cadastro cd = new Cadastro();
+        
         Login lg = new Login();
         Boletim bl = new Boletim();
         BoletimProfessor blp = new BoletimProfessor();
@@ -83,8 +91,13 @@ public class Helena {
                         }while(true);  
 
                         autoridade = cd.validaAutoridade(matricula);
-                        cd.setAutoridade(autoridade);
-
+                        if(autoridade){
+                            cd.setAutoridade(1);
+                        }else{
+                            cd.setAutoridade(0);
+                        }
+                        
+                        System.out.println(cadastroDAO.inserir(cd));
                         JOptionPane.showMessageDialog(null, "CADASTRO REALIZADO COM SUCESSO");
                         break;
                     case 1: // LOGIN
@@ -100,7 +113,7 @@ public class Helena {
 
                             if(lg.validaLogin(lgMatricula, lgSenha)){
                                 JOptionPane.showMessageDialog(null, "LOGIN REALIZADO COM SUCESSO");
-                                if(cd.getAutoridade()){
+                                if(cd.getAutoridade() == 1){
                                     do {                                    
                                         int opcoes = JOptionPane.showOptionDialog(null, "Bem vindo " + cd.getNome()+ ". Como posso lhe ajudar hoje?","Tela inicial", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, opcoesLogin, opcoesLogin[0]);
 
@@ -253,7 +266,7 @@ public class Helena {
             }
         }      
         JOptionPane.showMessageDialog(null, "Tchau Tchau e bons estudos !"+ "\nAss: Helena");
-
+        ConnectionFactory.fecharConexao(con);
     }
     
 }

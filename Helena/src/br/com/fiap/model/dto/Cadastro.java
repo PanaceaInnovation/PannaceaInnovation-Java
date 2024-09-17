@@ -1,4 +1,4 @@
-package br.com.fiap.bean;
+package br.com.fiap.model.dto;
 
 import javax.swing.JOptionPane;
 
@@ -10,12 +10,12 @@ public class Cadastro{
     private int matricula;
     private String email;
     private String senha;
-    private boolean autoridade; 
+    private int autoridade; 
 
     // Constructor (Usar o set para definir o constructor SEMPRE que tiver uma condição para atribuir a variavel)
     public Cadastro(){}
 
-    public Cadastro(String nome, String apelido, String cpf, int matricula, String email, String senha, boolean autoridade){
+    public Cadastro(String nome, String apelido, String cpf, int matricula, String email, String senha, int autoridade){
         this.nome = nome;
         this.apelido = apelido;
         setCpf(cpf);
@@ -92,14 +92,14 @@ public class Cadastro{
         }
     }
 
-    public boolean getAutoridade() {
+    public int getAutoridade() {
         return autoridade;
     }
-    public void setAutoridade(Boolean autoridade) {
+    public void setAutoridade(int autoridade) {
         if(validaAutoridade(matricula)){
-            this.autoridade = true;
+            this.autoridade = 1;
         }else{
-            this.autoridade = false;
+            this.autoridade = 0;
         }
     }
 
