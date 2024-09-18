@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
+import javax.swing.JOptionPane;
+
 import br.com.fiap.model.dto.Cadastro;
 
 public class CadastroDAO {
@@ -37,7 +39,11 @@ public class CadastroDAO {
                 return "Falha ao inserir!";
             }
         } catch (SQLException e) {
-            return "Erro de SQL: " + e.getMessage();
+            if (e.getErrorCode() == 1) {
+                return "Usuario já cadastrado";
+            } else {
+                return "Erro de SQL: " + e.getMessage();   
+            }
         }
     }
 }

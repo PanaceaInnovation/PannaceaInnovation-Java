@@ -50,8 +50,8 @@ public class Helena {
 
                 switch (opcao) {
                     case 0: // CADASTRO
-                        System.out.println("Cadastro");
-                        nome = JOptionPane.showInputDialog("Digite seu nome completo:");
+                        try {
+                            nome = JOptionPane.showInputDialog("Digite seu nome completo:");
                         cd.setNome(nome);
 
                         apelido = JOptionPane.showInputDialog("Como gostaria de ser chamado: ");
@@ -99,6 +99,10 @@ public class Helena {
                         
                         System.out.println(cadastroDAO.inserir(cd));
                         JOptionPane.showMessageDialog(null, "CADASTRO REALIZADO COM SUCESSO");
+                        } catch (Exception e) {
+                            // TODO: handle exception
+                        }
+                        
                         break;
                     case 1: // LOGIN
                         System.out.println("login");
