@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import br.com.fiap.model.dto.Cadastro;
 
 public class LoginDAO {
+    // DAO -> Login -> Controller -> View
     private Connection con;
     Cadastro cadastro;
     
@@ -27,7 +28,7 @@ public class LoginDAO {
             ResultSet rs = ps.executeQuery();
 
             if(rs.next()){
-                return "Placa: " + carro.getPlaca() + "\nCor: " + rs.getString("cor") + "\nDescrição: " + rs.getString("descricao");
+                return "Login: ";
             }else{
                 return "Registro não encontrado!";
             }
