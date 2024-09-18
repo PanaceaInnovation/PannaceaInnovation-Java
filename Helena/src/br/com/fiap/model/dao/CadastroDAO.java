@@ -8,7 +8,6 @@ import br.com.fiap.model.dto.Cadastro;
 
 public class CadastroDAO {
     private Connection con;
-    private Cadastro cadastro;
 
     public CadastroDAO(Connection con) {
         this.con = con;

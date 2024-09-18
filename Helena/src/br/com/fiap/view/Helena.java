@@ -6,12 +6,12 @@ import javax.swing.JOptionPane;
 
 import br.com.fiap.bean.Boletim;
 import br.com.fiap.bean.BoletimProfessor;
-import br.com.fiap.bean.Login;
 import br.com.fiap.bean.Teste;
 import br.com.fiap.bean.TestesProfessor;
 import br.com.fiap.model.dao.CadastroDAO;
 import br.com.fiap.model.dao.ConnectionFactory;
 import br.com.fiap.model.dto.Cadastro;
+import br.com.fiap.model.dto.Login;
 import br.com.fiap.bean.Revisar;
 import br.com.fiap.bean.RevisarProfessor;
 import br.com.fiap.bean.Ranking;

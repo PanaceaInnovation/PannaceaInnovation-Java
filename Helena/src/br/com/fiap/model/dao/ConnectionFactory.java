@@ -13,6 +13,7 @@ public class ConnectionFactory {
 
         try {
             Class.forName("oracle.jdbc.driver.OracleDriver");
+            //Class.forName("oracle.jdbc.driver.OracleDriver");
             String url = "jdbc:oracle:thin:@oracle.fiap.com.br:1521:ORCL";
             final String USER = "rm97758";
             final String PASS = "080305";
