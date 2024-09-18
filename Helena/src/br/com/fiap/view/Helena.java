@@ -97,10 +97,15 @@ public class Helena {
                             cd.setAutoridade(0);
                         }
                         
-                        System.out.println(cadastroDAO.inserir(cd));
-                        JOptionPane.showMessageDialog(null, "CADASTRO REALIZADO COM SUCESSO");
+                        String resultado = cadastroDAO.inserir(cd);
+                        // Verifica o resultado da inserção
+                        if (resultado.equals("Inserido com sucesso!")) {
+                            JOptionPane.showMessageDialog(null, resultado); // Exibe a mensagem de sucesso
+                        } else {
+                            JOptionPane.showMessageDialog(null, resultado); // Exibe a mensagem de erro (como "Usuário já cadastrado")
+                        }
                         } catch (Exception e) {
-                            // TODO: handle exception
+                            JOptionPane.showMessageDialog(null, "Erro ao realizar cadastro: " + e.getMessage());
                         }
                         
                         break;
