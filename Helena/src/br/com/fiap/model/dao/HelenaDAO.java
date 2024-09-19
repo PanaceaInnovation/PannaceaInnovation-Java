@@ -2,9 +2,11 @@ package br.com.fiap.model.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import br.com.fiap.model.dto.Cadastro;
+import br.com.fiap.model.dto.Dados;
+import br.com.fiap.model.dto.LoginDTO;
 
 public class HelenaDAO {
     private Connection con;
@@ -18,7 +20,9 @@ public class HelenaDAO {
     }
 
     // Metodo
-    public String inserir(Cadastro cadastro) {
+
+    //CREATE
+    public String inserir(Dados cadastro) {
         String sql = "Insert into Cadastro(nome, apelido, cpf, matricula, email, senha, autoridade) values(?,?,?,?,?,?,?)";
 
         // try-with-resources
@@ -42,6 +46,24 @@ public class HelenaDAO {
             } else {
                 return "Erro de SQL: " + e.getMessage();   
             }
+        }
+    }
+
+    //READ
+    public String consultaLogin(LoginDTO loginDTO){
+        String sql = "select * from Cadastro where matricula = ? AND senha = ?"; 
+        try (PreparedStatement ps = getCon().prepareStatement(sql)){
+            ps.setInt(1, loginDTO.getMatricula() );
+            ps.setString(2, loginDTO.getSenha() );
+            ResultSet rs = ps.executeQuery();
+
+            if(rs.next()){
+                return "Sucesso";
+            }else{
+                return "Registro não encontrado!";
+            }
+        } catch (SQLException e) {
+            return "Erro de SQL: " + e.getMessage();
         }
     }
 }

@@ -2,7 +2,7 @@ package br.com.fiap.model.dto;
 
 import javax.swing.JOptionPane;
 
-public class Cadastro{
+public class Dados{
     // Atributos
     private String nome;
     private String apelido;
@@ -13,9 +13,9 @@ public class Cadastro{
     private int autoridade; 
 
     // Constructor (Usar o set para definir o constructor SEMPRE que tiver uma condição para atribuir a variavel)
-    public Cadastro(){}
+    public Dados(){}
 
-    public Cadastro(String nome, String apelido, String cpf, int matricula, String email, String senha, int autoridade){
+    public Dados(String nome, String apelido, String cpf, int matricula, String email, String senha, int autoridade){
         this.nome = nome;
         this.apelido = apelido;
         setCpf(cpf);

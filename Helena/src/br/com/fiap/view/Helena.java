@@ -8,8 +8,8 @@ import br.com.fiap.controller.HelenaController;
 import br.com.fiap.model.dao.ConnectionFactory;
 import br.com.fiap.model.dao.HelenaDAO;
 import br.com.fiap.model.dto.BoletimProfessor;
-import br.com.fiap.model.dto.Cadastro;
-import br.com.fiap.model.dto.Login;
+import br.com.fiap.model.dto.Dados;
+import br.com.fiap.model.dto.LoginDTO;
 import br.com.fiap.model.dto.Psicologia;
 import br.com.fiap.model.dto.Ranking;
 import br.com.fiap.model.dto.Revisar;
@@ -22,9 +22,7 @@ public class Helena {
     public static void main(String[] args) {
         //Conexão
         Connection con = ConnectionFactory.abrirConexao();
-        //CadastroDAO cadastroDAO = new CadastroDAO(con);
-        HelenaDAO helenaDAO = new HelenaDAO(con);
-        Cadastro cd = new Cadastro();
+        Dados cd = new Dados();
         HelenaController helenaController = new HelenaController();
 
         // Atributos
@@ -32,10 +30,11 @@ public class Helena {
         int matricula, autoridade,lgMatricula;
         String[] escolhas = {"Cadastro", "Login", "Sair"};
         String[] opcoesLogin = {"Boletim", "Testes", "Revisar", "Ranking", "Psicologia", "Sair"};
-        boolean continua = true;
+        boolean continua= true;
+        boolean loginSucesso = false;
 
         
-        Login lg = new Login();
+        LoginDTO lg = new LoginDTO();
         BoletimProfessor blp = new BoletimProfessor();
         BoletimController boletimController = new BoletimController(); // Adiciona o controller do boletim
         Teste ts = new Teste();
@@ -103,7 +102,7 @@ public class Helena {
                             cd.setAutoridade(autoridade);
 
                             // Chamar o controller para inserir o cadastro
-                            String resultado = helenaController.inserirCadastro(nome, apelido, cpf, matricula, email, senha, autoridade);
+                            String resultado = helenaController.inserirUsuario(nome, apelido, cpf, matricula, email, senha, autoridade);
                             
                             // Verifica o resultado da inserção
                             if (resultado.equals("Inserido com sucesso!")) {
@@ -116,6 +115,32 @@ public class Helena {
                         }
                         break;
                     case 1: // LOGIN
+                        try {
+                            do {
+                                matricula = Integer.parseInt(JOptionPane.showInputDialog("Digite sua matrícula:"));
+                                senha = JOptionPane.showInputDialog("Digite sua senha:");
+                            
+                                // Envia os dados para o controller
+                                String resultado = helenaController.validarUsuario(matricula, senha);
+                
+                
+                                if (resultado.equals("Sucesso")) {
+                                    JOptionPane.showMessageDialog(null, "LOGIN REALIZADO COM SUCESSO");
+                                    // Aqui você pode chamar outra parte do sistema
+                                    break;
+                                } else {
+                                    JOptionPane.showMessageDialog(null, "CREDENCIAIS INVÁLIDAS!" + "\nTente novamente.");
+                                }
+                            } while (true);
+                            
+                            
+                        } catch (Exception e) {
+                            JOptionPane.showMessageDialog(null, "Erro: " + e.getMessage());
+                        }
+                        break;
+
+
+                    /*
                         System.out.println("login");
 
                         do {
@@ -268,6 +293,7 @@ public class Helena {
                             }               
                         }while(true);
                         break;
+                    */
                     case 2:
                         JOptionPane.showMessageDialog(null, "Saindo do aplicativo....");
                         continua = false; // Se tirar isso entra em loop
