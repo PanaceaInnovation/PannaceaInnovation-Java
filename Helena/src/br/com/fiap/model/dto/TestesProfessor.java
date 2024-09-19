@@ -1,4 +1,4 @@
-package br.com.fiap.bean;
+package br.com.fiap.model.dto;
 
 public class TestesProfessor extends Teste{
     public TestesProfessor(){}

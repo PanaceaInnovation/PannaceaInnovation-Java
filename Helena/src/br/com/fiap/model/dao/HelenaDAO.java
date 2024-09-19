@@ -4,14 +4,12 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-import javax.swing.JOptionPane;
-
 import br.com.fiap.model.dto.Cadastro;
 
-public class CadastroDAO {
+public class HelenaDAO {
     private Connection con;
 
-    public CadastroDAO(Connection con) {
+    public HelenaDAO(Connection con) {
         this.con = con;
     }
 

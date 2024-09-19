@@ -1,6 +1,6 @@
-package br.com.fiap.bean;
+package br.com.fiap.model.dto;
 
-public class BoletimProfessor extends Boletim {
+public class BoletimProfessor extends BoletimDTO {
     public BoletimProfessor(){}
 
     

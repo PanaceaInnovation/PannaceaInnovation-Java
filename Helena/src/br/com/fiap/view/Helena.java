@@ -1,41 +1,43 @@
 package br.com.fiap.view;
 
 import java.sql.Connection;
-
 import javax.swing.JOptionPane;
 
-import br.com.fiap.bean.Boletim;
-import br.com.fiap.bean.BoletimProfessor;
-import br.com.fiap.bean.Teste;
-import br.com.fiap.bean.TestesProfessor;
-import br.com.fiap.model.dao.CadastroDAO;
+import br.com.fiap.controller.BoletimController;
+import br.com.fiap.controller.HelenaController;
 import br.com.fiap.model.dao.ConnectionFactory;
+import br.com.fiap.model.dao.HelenaDAO;
+import br.com.fiap.model.dto.BoletimProfessor;
 import br.com.fiap.model.dto.Cadastro;
 import br.com.fiap.model.dto.Login;
-import br.com.fiap.bean.Revisar;
-import br.com.fiap.bean.RevisarProfessor;
-import br.com.fiap.bean.Ranking;
-import br.com.fiap.bean.Psicologia;
+import br.com.fiap.model.dto.Psicologia;
+import br.com.fiap.model.dto.Ranking;
+import br.com.fiap.model.dto.Revisar;
+import br.com.fiap.model.dto.RevisarProfessor;
+import br.com.fiap.model.dto.Teste;
+import br.com.fiap.model.dto.TestesProfessor;
 
 
 public class Helena {
     public static void main(String[] args) {
         //Conexão
         Connection con = ConnectionFactory.abrirConexao();
-        CadastroDAO cadastroDAO = new CadastroDAO(con);
+        //CadastroDAO cadastroDAO = new CadastroDAO(con);
+        HelenaDAO helenaDAO = new HelenaDAO(con);
         Cadastro cd = new Cadastro();
+        HelenaController helenaController = new HelenaController();
 
         // Atributos
         String nome, apelido, cpf, email, senha, lgSenha;
-        int matricula, lgMatricula;
+        int matricula, autoridade,lgMatricula;
         String[] escolhas = {"Cadastro", "Login", "Sair"};
         String[] opcoesLogin = {"Boletim", "Testes", "Revisar", "Ranking", "Psicologia", "Sair"};
-        boolean autoridade,continua = true;
+        boolean continua = true;
 
         
         Login lg = new Login();
-        Boletim bl = new Boletim();
         BoletimProfessor blp = new BoletimProfessor();
+        BoletimController boletimController = new BoletimController(); // Adiciona o controller do boletim
         Teste ts = new Teste();
         TestesProfessor tsp = new TestesProfessor();
         Revisar rv = new Revisar();
@@ -51,63 +53,67 @@ public class Helena {
                 switch (opcao) {
                     case 0: // CADASTRO
                         try {
+                            // Solicitar o nome
                             nome = JOptionPane.showInputDialog("Digite seu nome completo:");
-                        cd.setNome(nome);
+                            cd.setNome(nome);
 
-                        apelido = JOptionPane.showInputDialog("Como gostaria de ser chamado: ");
-                        cd.setApelido(apelido);
+                            // Solicitar o apelido
+                            apelido = JOptionPane.showInputDialog("Como gostaria de ser chamado: ");
+                            cd.setApelido(apelido);
 
-                        do{
-                            cpf = JOptionPane.showInputDialog("Digite seu CPF:");
-                            if (cd.validaCPF(cpf)) {
-                                cd.setCpf(cpf);
-                                break;
-                            }else {
-                                JOptionPane.showMessageDialog(null, "CPF INVÁLIDO: " + cpf);
+                            // Validação de CPF
+                            do {
+                                cpf = JOptionPane.showInputDialog("Digite seu CPF:");
+                                if (cd.validaCPF(cpf)) {
+                                    cd.setCpf(cpf);
+                                    break;
+                                } else {
+                                    JOptionPane.showMessageDialog(null, "CPF INVÁLIDO: " + cpf);
+                                }
+                            } while (true);
+
+                            // Validação de matrícula
+                            do {
+                                matricula = Integer.parseInt(JOptionPane.showInputDialog("Digite sua matrícula da instituição de ensino: "));
+                                if (cd.validaMatricula(matricula)) {
+                                    cd.setMatricula(matricula);
+                                    break;
+                                } else {
+                                    JOptionPane.showMessageDialog(null, "MATRÍCULA INVÁLIDA!");
+                                }
+                            } while (true);
+
+                            // Solicitar o email
+                            email = JOptionPane.showInputDialog("Digite seu email: ");
+                            cd.setEmail(email);
+
+                            // Validação de senha
+                            do {
+                                senha = JOptionPane.showInputDialog("Crie uma senha para acesso: ");
+                                if (cd.validaSenha(senha)) {
+                                    cd.setSenha(senha);
+                                    break;
+                                } else {
+                                    JOptionPane.showMessageDialog(null, "SENHA DEVE SER MAIOR QUE 7 CARACTERES!");
+                                }
+                            } while (true);
+
+                            // Definir autoridade
+                            autoridade = cd.validaAutoridade(matricula) ? 1 : 0;
+                            cd.setAutoridade(autoridade);
+
+                            // Chamar o controller para inserir o cadastro
+                            String resultado = helenaController.inserirCadastro(nome, apelido, cpf, matricula, email, senha, autoridade);
+                            
+                            // Verifica o resultado da inserção
+                            if (resultado.equals("Inserido com sucesso!")) {
+                                JOptionPane.showMessageDialog(null, resultado); // Exibe a mensagem de sucesso
+                            } else {
+                                JOptionPane.showMessageDialog(null, resultado); // Exibe a mensagem de erro (como "Usuário já cadastrado")
                             }
-                        } while (true);
-
-                        do{
-                            matricula = Integer.parseInt(JOptionPane.showInputDialog("Digite sua matrícula da instituição de ensino: "));
-                            if(cd.validaMatricula(matricula)){
-                                cd.setMatricula(matricula);
-                                break;
-                            }else{
-                                JOptionPane.showMessageDialog(null, "MATRÍCULA INVÁLIDA!");
-                            }
-                        }while(true);                        
-
-                        email = JOptionPane.showInputDialog("Digite seu email: ");
-                        cd.setEmail(email);
-
-                        do{
-                            senha = JOptionPane.showInputDialog("Crie uma senha para acesso: ");
-                            if(cd.validaSenha(senha)){
-                                cd.setSenha(senha);
-                                break;
-                            }else{
-                                JOptionPane.showMessageDialog(null, "SENHA DEVE SER MAIOR QUE 7 CARACTERES !");
-                            }
-                        }while(true);  
-
-                        autoridade = cd.validaAutoridade(matricula);
-                        if(autoridade){
-                            cd.setAutoridade(1);
-                        }else{
-                            cd.setAutoridade(0);
-                        }
-                        
-                        String resultado = cadastroDAO.inserir(cd);
-                        // Verifica o resultado da inserção
-                        if (resultado.equals("Inserido com sucesso!")) {
-                            JOptionPane.showMessageDialog(null, resultado); // Exibe a mensagem de sucesso
-                        } else {
-                            JOptionPane.showMessageDialog(null, resultado); // Exibe a mensagem de erro (como "Usuário já cadastrado")
-                        }
                         } catch (Exception e) {
                             JOptionPane.showMessageDialog(null, "Erro ao realizar cadastro: " + e.getMessage());
                         }
-                        
                         break;
                     case 1: // LOGIN
                         System.out.println("login");
@@ -229,7 +235,7 @@ public class Helena {
 
                                         switch (opcoes) {
                                             case 0:
-                                                JOptionPane.showMessageDialog(null, bl.mostrarBoletim());
+                                                JOptionPane.showMessageDialog(null,boletimController.mostrarBoletim());
                                                 break;
                                             case 1:
                                                 JOptionPane.showMessageDialog(null, ts.mostrarTestes());

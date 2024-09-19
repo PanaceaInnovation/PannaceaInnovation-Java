@@ -1,4 +1,4 @@
-package br.com.fiap.bean;
+package br.com.fiap.model.dto;
 
 import javax.swing.JOptionPane;
 
@@ -13,7 +13,7 @@ public class Teste {
     }
 
     public String mostrarTestes(){
-        int opcao = JOptionPane.showOptionDialog(null, "Selecione um Psicologo para se conectar","Tela inicial", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, testes, testes[0]);
+        int opcao = JOptionPane.showOptionDialog(null, "Selecione um teste para visualizar seu status:","Tela inicial", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, testes, testes[0]);
 
         switch (opcao) {
             case 0:
