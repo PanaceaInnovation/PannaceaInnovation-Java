@@ -5,12 +5,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import br.com.fiap.model.dto.Dados;
+import br.com.fiap.model.dto.UsuarioDTO;
 
 public class LoginDAO {
     // DAO -> Login -> Controller -> View
     private Connection con;
-    Dados cadastro;
+    UsuarioDTO cadastro;
     
     public LoginDAO(Connection con){
         this.con = con;

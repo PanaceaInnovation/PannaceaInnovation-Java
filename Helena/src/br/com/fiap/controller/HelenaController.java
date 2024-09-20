@@ -5,7 +5,7 @@ import java.sql.SQLException;
 
 import br.com.fiap.model.dao.ConnectionFactory;
 import br.com.fiap.model.dao.HelenaDAO;
-import br.com.fiap.model.dto.Dados;
+import br.com.fiap.model.dto.UsuarioDTO;
 import br.com.fiap.model.dto.LoginDTO;
 
 public class HelenaController {
@@ -14,7 +14,7 @@ public class HelenaController {
         
         String resultado;
         Connection con = ConnectionFactory.abrirConexao();
-        Dados dados = new Dados();
+        UsuarioDTO dados = new UsuarioDTO();
 
         dados.setNome(nome);
         dados.setApelido(apelido);

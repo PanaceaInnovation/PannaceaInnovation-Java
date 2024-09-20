@@ -8,7 +8,7 @@ import br.com.fiap.controller.HelenaController;
 import br.com.fiap.model.dao.ConnectionFactory;
 import br.com.fiap.model.dao.HelenaDAO;
 import br.com.fiap.model.dto.BoletimProfessor;
-import br.com.fiap.model.dto.Dados;
+import br.com.fiap.model.dto.UsuarioDTO;
 import br.com.fiap.model.dto.LoginDTO;
 import br.com.fiap.model.dto.Psicologia;
 import br.com.fiap.model.dto.Ranking;
@@ -22,7 +22,7 @@ public class Helena {
     public static void main(String[] args) {
         //Conexão
         Connection con = ConnectionFactory.abrirConexao();
-        Dados cd = new Dados();
+        UsuarioDTO cd = new UsuarioDTO();
         HelenaController helenaController = new HelenaController();
 
         // Atributos
