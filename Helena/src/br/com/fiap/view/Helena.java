@@ -6,7 +6,6 @@ import javax.swing.JOptionPane;
 import br.com.fiap.controller.BoletimController;
 import br.com.fiap.controller.HelenaController;
 import br.com.fiap.model.dao.ConnectionFactory;
-import br.com.fiap.model.dao.HelenaDAO;
 import br.com.fiap.model.dto.BoletimProfessor;
 import br.com.fiap.model.dto.UsuarioDTO;
 import br.com.fiap.model.dto.LoginDTO;
@@ -123,12 +122,17 @@ public class Helena {
                                 // Envia os dados para o controller
                                 String resultado = helenaController.validarUsuario(matricula, senha);
                 
-                
+                                
+
                                 if (resultado.equals("Sucesso")) {
                                     JOptionPane.showMessageDialog(null, "LOGIN REALIZADO COM SUCESSO");
                                     // Aqui você pode chamar outra parte do sistema
                                     break;
-                                } else {
+                                }else if (resultado.equals("Autoridade")) {
+                                    JOptionPane.showMessageDialog(null, "LOGIN REALIZADO COM SUCESSO - USUÁRIO AUTORIDADE");
+                                    // Ações para usuário com autoridade
+                                    break;
+                                }else {
                                     JOptionPane.showMessageDialog(null, "CREDENCIAIS INVÁLIDAS!" + "\nTente novamente.");
                                 }
                             } while (true);
