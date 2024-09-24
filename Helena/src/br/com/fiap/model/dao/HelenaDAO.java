@@ -59,11 +59,12 @@ public class HelenaDAO {
             ResultSet rs = ps.executeQuery();
 
             if(rs.next()){
+                String nome = rs.getString("nome");
                 int autoridade = rs.getInt("autoridade");
                 if (autoridade == 1) {
-                    return "Autoridade";
+                    return "Autoridade:" + nome;
                 } else {
-                    return "Sucesso";
+                    return "Sucesso:" + nome;
                 }
             }else{
                 return "Registro não encontrado!";

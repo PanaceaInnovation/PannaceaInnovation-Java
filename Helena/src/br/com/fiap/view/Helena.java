@@ -121,13 +121,34 @@ public class Helena {
                             
                                 // Envia os dados para o controller
                                 String resultado = helenaController.validarUsuario(matricula, senha);
-                
-                                
 
-                                if (resultado.equals("Sucesso")) {
+                                if (resultado.startsWith("Sucesso:")){
+
+                                    nome = resultado.split(":")[1];
                                     JOptionPane.showMessageDialog(null, "LOGIN REALIZADO COM SUCESSO");
-                                    // Aqui você pode chamar outra parte do sistema
-                                    break;
+
+                                    // Aqui você pode chamar outra parte do sistema (No caso os cases)
+                                    do {
+                                        int opcoes = JOptionPane.showOptionDialog(null, "Bem vindo " + nome + ". Como posso lhe ajudar hoje?","Tela inicial", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, opcoesLogin, opcoesLogin[0]);
+                                        switch (opcoes) {
+                                            case 0:
+                                                String[] materias = boletimController.getMaterias(); // Método para obter as matérias
+            
+                                                opcao = JOptionPane.showOptionDialog(null, "Bem vindo a Helena, escolha uma opção para continuar",
+                                                    "Tela inicial", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, materias, materias[0]);
+        
+                                                resultado = boletimController.mostrarBoletim(opcao);
+                                                JOptionPane.showMessageDialog(null, resultado);
+                                                break;
+                                        
+                                            case 5:
+                                                JOptionPane.showMessageDialog(null, "Saindo do aplicativo....");
+                                                continua = false; // Se tirar isso entra em loop
+                                                break; // sem isso aparece escolha incorreta
+                                            default:
+                                                throw new Exception("Escolha incorreta");
+                                        }
+                                    } while (continua);
                                 }else if (resultado.equals("Autoridade")) {
                                     JOptionPane.showMessageDialog(null, "LOGIN REALIZADO COM SUCESSO - USUÁRIO AUTORIDADE");
                                     // Ações para usuário com autoridade
@@ -136,8 +157,7 @@ public class Helena {
                                     JOptionPane.showMessageDialog(null, "CREDENCIAIS INVÁLIDAS!" + "\nTente novamente.");
                                 }
                             } while (true);
-                            
-                            
+                            break;
                         } catch (Exception e) {
                             JOptionPane.showMessageDialog(null, "Erro: " + e.getMessage());
                         }
