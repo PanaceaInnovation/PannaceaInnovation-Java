@@ -143,7 +143,7 @@ public class Helena {
                                             case 5:
                                                 JOptionPane.showMessageDialog(null, "Saindo do aplicativo....");
                                                 loginContinua = false;
-                                                continua = false; // Termina o loop principal
+                                                //continua = false; // Termina o loop principal após fazer logout
                                                 break;
                                         
                                             default:
