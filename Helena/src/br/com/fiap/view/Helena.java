@@ -140,7 +140,7 @@ public class Helena {
                                                 String boletim = boletimController.mostrarBoletim(materiaEscolhida);
                                                 JOptionPane.showMessageDialog(null, boletim);
                                                 break;
-                                            case 5:
+                                            case 5: // Volta ao inicio OU encerra tudo (a definir)
                                                 JOptionPane.showMessageDialog(null, "Saindo do aplicativo....");
                                                 loginContinua = false;
                                                 //continua = false; // Termina o loop principal após fazer logout
