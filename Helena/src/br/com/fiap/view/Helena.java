@@ -11,15 +11,7 @@ import br.com.fiap.controller.RankingController;
 import br.com.fiap.controller.RevisarController;
 import br.com.fiap.controller.TesteController;
 import br.com.fiap.model.dao.ConnectionFactory;
-import br.com.fiap.model.dto.BoletimProfessor;
 import br.com.fiap.model.dto.UsuarioDTO;
-import br.com.fiap.model.dto.LoginDTO;
-import br.com.fiap.model.dto.PsicologiaDTO;
-import br.com.fiap.model.dto.RankingDTO;
-import br.com.fiap.model.dto.RevisarDTO;
-import br.com.fiap.model.dto.RevisarProfessor;
-import br.com.fiap.model.dto.TesteDTO;
-import br.com.fiap.model.dto.TestesProfessor;
 
 
 public class Helena {
@@ -33,7 +25,7 @@ public class Helena {
         int matricula, autoridade;
         String[] escolhas = {"Cadastro", "Login", "Sair"};
         String[] opcoesLogin = {"Boletim", "Testes", "Revisões", "Ranking", "Psicologia", "Sair"};
-        String[] opcoesLoginProfessor = {"Média alunos", "Testes Alunos", "Revisões", "Ranking Alunos", "Psicologia", "Sair"};
+        String[] opcoesLoginProfessor = {"Média alunos", "Testes Alunos", "Revisões", "Ranking Alunos", "Psicologia", "Administrar Alunos","Sair"};
         boolean continua= true;
         boolean loginSucesso = false;
 
@@ -214,7 +206,10 @@ public class Helena {
                                                     String atendimento = psicologiaController.mostraPsicologos(psicologoEscolhido);
                                                     JOptionPane.showMessageDialog(null, atendimento);
                                                     break;
-                                                case 5:
+                                                case 5: // Administrar alunos
+
+                                                    break;
+                                                case 6:
                                                     JOptionPane.showMessageDialog(null, "Fazendo logout....");
                                                     loginContinua = false;
                                                     break;

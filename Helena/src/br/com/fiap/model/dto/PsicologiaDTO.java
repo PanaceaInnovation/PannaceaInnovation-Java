@@ -1,7 +1,5 @@
 package br.com.fiap.model.dto;
 
-import javax.swing.JOptionPane;
-
 public class PsicologiaDTO {
     private String[] psicologos = {"Dr. Laura Cardoso", "Dr. Rafael Mendes", "Dr. Mariana Ribeiro", "Dr. Gustavo Almeida"};
 
