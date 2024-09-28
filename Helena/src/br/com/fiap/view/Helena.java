@@ -87,7 +87,7 @@ public class Helena {
 
                             // Validação de senha
                             do {
-                                senha = JOptionPane.showInputDialog("Crie uma senha para acesso:\n" + "OBS: Apenas números!");
+                                senha = JOptionPane.showInputDialog("Crie uma senha para acesso:");
                                 if (cd.validaSenha(senha)) {
                                     cd.setSenha(senha);
                                     break;
