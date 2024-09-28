@@ -6,6 +6,7 @@ import javax.swing.JOptionPane;
 import br.com.fiap.controller.BoletimController;
 import br.com.fiap.controller.BoletimProfessorController;
 import br.com.fiap.controller.HelenaController;
+import br.com.fiap.controller.RevisarController;
 import br.com.fiap.controller.TesteController;
 import br.com.fiap.model.dao.ConnectionFactory;
 import br.com.fiap.model.dto.BoletimProfessor;
@@ -13,7 +14,7 @@ import br.com.fiap.model.dto.UsuarioDTO;
 import br.com.fiap.model.dto.LoginDTO;
 import br.com.fiap.model.dto.Psicologia;
 import br.com.fiap.model.dto.Ranking;
-import br.com.fiap.model.dto.Revisar;
+import br.com.fiap.model.dto.RevisarDTO;
 import br.com.fiap.model.dto.RevisarProfessor;
 import br.com.fiap.model.dto.TesteDTO;
 import br.com.fiap.model.dto.TestesProfessor;
@@ -24,11 +25,10 @@ public class Helena {
         //Conexão
         Connection con = ConnectionFactory.abrirConexao();
         UsuarioDTO cd = new UsuarioDTO();
-        HelenaController helenaController = new HelenaController();
 
         // Atributos
-        String nome, apelido, cpf, email, senha, lgSenha;
-        int matricula, autoridade,lgMatricula;
+        String nome, apelido, cpf, email, senha;
+        int matricula, autoridade;
         String[] escolhas = {"Cadastro", "Login", "Sair"};
         String[] opcoesLogin = {"Boletim", "Testes", "Revisões", "Ranking", "Psicologia", "Sair"};
         String[] opcoesLoginProfessor = {"Média alunos", "Testes Alunos", "Revisões", "Ranking Alunos", "Psicologia", "Sair"};
@@ -36,19 +36,23 @@ public class Helena {
         boolean loginSucesso = false;
 
         // CONTROLLER
+        HelenaController helenaController = new HelenaController();
         BoletimController boletimController = new BoletimController();
         BoletimProfessorController boletimProfessorController = new BoletimProfessorController();
         TesteController testeController = new TesteController();
 
+        RevisarController revisarController = new RevisarController();
 
+        /*
         LoginDTO lg = new LoginDTO();
         BoletimProfessor blp = new BoletimProfessor();
         TesteDTO ts = new TesteDTO();
         TestesProfessor tsp = new TestesProfessor();
-        Revisar rv = new Revisar();
+        RevisarDTO rv = new RevisarDTO();
         RevisarProfessor rp = new RevisarProfessor();
         Ranking rk = new Ranking();
         Psicologia ps = new Psicologia();
+        */
          
         while(continua){
             try {
@@ -155,7 +159,11 @@ public class Helena {
                                                     JOptionPane.showMessageDialog(null, teste);
                                                     break;
                                                 case 2: // Revisões
+                                                    String[] revisoes = revisarController.getRevisar();
+                                                    int revisaoEscolhido =  JOptionPane.showOptionDialog(null, "Escolha uma revisão para verificar seu status:", "Revisões", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, revisoes, revisoes[0]);
 
+                                                    String revisar = revisarController.mostrarRevisao(revisaoEscolhido);
+                                                    JOptionPane.showMessageDialog(null, revisar);
 
                                                     break;
                                                 case 3: // Ranking

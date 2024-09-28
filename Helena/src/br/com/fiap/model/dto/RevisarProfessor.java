@@ -2,7 +2,7 @@ package br.com.fiap.model.dto;
 
 import javax.swing.JOptionPane;
 
-public class RevisarProfessor extends Revisar {
+public class RevisarProfessor extends RevisarDTO {
     public RevisarProfessor() {}
 
     // Método para retornar as matérias
