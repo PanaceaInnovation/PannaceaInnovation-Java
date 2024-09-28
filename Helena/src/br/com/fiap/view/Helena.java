@@ -6,14 +6,16 @@ import javax.swing.JOptionPane;
 import br.com.fiap.controller.BoletimController;
 import br.com.fiap.controller.BoletimProfessorController;
 import br.com.fiap.controller.HelenaController;
+import br.com.fiap.controller.PsicologiaController;
+import br.com.fiap.controller.RankingController;
 import br.com.fiap.controller.RevisarController;
 import br.com.fiap.controller.TesteController;
 import br.com.fiap.model.dao.ConnectionFactory;
 import br.com.fiap.model.dto.BoletimProfessor;
 import br.com.fiap.model.dto.UsuarioDTO;
 import br.com.fiap.model.dto.LoginDTO;
-import br.com.fiap.model.dto.Psicologia;
-import br.com.fiap.model.dto.Ranking;
+import br.com.fiap.model.dto.PsicologiaDTO;
+import br.com.fiap.model.dto.RankingDTO;
 import br.com.fiap.model.dto.RevisarDTO;
 import br.com.fiap.model.dto.RevisarProfessor;
 import br.com.fiap.model.dto.TesteDTO;
@@ -43,16 +45,8 @@ public class Helena {
 
         RevisarController revisarController = new RevisarController();
 
-        /*
-        LoginDTO lg = new LoginDTO();
-        BoletimProfessor blp = new BoletimProfessor();
-        TesteDTO ts = new TesteDTO();
-        TestesProfessor tsp = new TestesProfessor();
-        RevisarDTO rv = new RevisarDTO();
-        RevisarProfessor rp = new RevisarProfessor();
-        Ranking rk = new Ranking();
-        Psicologia ps = new Psicologia();
-        */
+        RankingController rankingController = new RankingController();
+        PsicologiaController psicologiaController = new PsicologiaController();
          
         while(continua){
             try {
@@ -83,7 +77,7 @@ public class Helena {
 
                             // Validação de matrícula
                             do {
-                                matricula = Integer.parseInt(JOptionPane.showInputDialog("Digite sua matrícula da instituição de ensino: "));
+                                matricula = Integer.parseInt(JOptionPane.showInputDialog("Digite sua matrícula da instituição de ensino:\n" + "OBS: Apenas números"));
                                 if (cd.validaMatricula(matricula)) {
                                     cd.setMatricula(matricula);
                                     break;
@@ -98,7 +92,7 @@ public class Helena {
 
                             // Validação de senha
                             do {
-                                senha = JOptionPane.showInputDialog("Crie uma senha para acesso: ");
+                                senha = JOptionPane.showInputDialog("Crie uma senha para acesso:\n" + "OBS: Apenas números!");
                                 if (cd.validaSenha(senha)) {
                                     cd.setSenha(senha);
                                     break;
@@ -167,12 +161,17 @@ public class Helena {
 
                                                     break;
                                                 case 3: // Ranking
-
+                                                    String ranking = rankingController.getRanking();
+                                                    JOptionPane.showMessageDialog(null, ranking);
                                                     break;
                                                 case 4: // Psicologia
+                                                    String[] psicologos = psicologiaController.getPsicologos();
+                                                    int psicologoEscolhido =  JOptionPane.showOptionDialog(null, "Escolha psicologo para iniciar seu atendimento:", "Psicologia", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, psicologos, psicologos[0]);
 
+                                                    String atendimento = psicologiaController.mostraPsicologos(psicologoEscolhido);
+                                                    JOptionPane.showMessageDialog(null, atendimento);
                                                     break;
-                                                case 5: // Volta ao inicio OU encerra tudo (a definir)
+                                                case 5: // Volta ao inicio
                                                     JOptionPane.showMessageDialog(null, "Fazendo logout....");
                                                     loginContinua = false;
                                                     break;
@@ -204,11 +203,16 @@ public class Helena {
                                                 case 2:
 
                                                     break;
-                                                case 3:
-
+                                                case 3: // Ranking
+                                                    String ranking = rankingController.getRanking();
+                                                    JOptionPane.showMessageDialog(null, ranking);
                                                     break;
-                                                case 4:
+                                                case 4: // Psicologia
+                                                    String[] psicologos = psicologiaController.getPsicologos();
+                                                    int psicologoEscolhido =  JOptionPane.showOptionDialog(null, "Escolha psicologo para iniciar seu atendimento:", "Psicologia", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, psicologos, psicologos[0]);
 
+                                                    String atendimento = psicologiaController.mostraPsicologos(psicologoEscolhido);
+                                                    JOptionPane.showMessageDialog(null, atendimento);
                                                     break;
                                                 case 5:
                                                     JOptionPane.showMessageDialog(null, "Fazendo logout....");
