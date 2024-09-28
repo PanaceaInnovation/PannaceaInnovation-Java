@@ -4,7 +4,9 @@ import java.sql.Connection;
 import javax.swing.JOptionPane;
 
 import br.com.fiap.controller.BoletimController;
+import br.com.fiap.controller.BoletimProfessorController;
 import br.com.fiap.controller.HelenaController;
+import br.com.fiap.controller.TesteController;
 import br.com.fiap.model.dao.ConnectionFactory;
 import br.com.fiap.model.dto.BoletimProfessor;
 import br.com.fiap.model.dto.UsuarioDTO;
@@ -13,7 +15,7 @@ import br.com.fiap.model.dto.Psicologia;
 import br.com.fiap.model.dto.Ranking;
 import br.com.fiap.model.dto.Revisar;
 import br.com.fiap.model.dto.RevisarProfessor;
-import br.com.fiap.model.dto.Teste;
+import br.com.fiap.model.dto.TesteDTO;
 import br.com.fiap.model.dto.TestesProfessor;
 
 
@@ -28,15 +30,20 @@ public class Helena {
         String nome, apelido, cpf, email, senha, lgSenha;
         int matricula, autoridade,lgMatricula;
         String[] escolhas = {"Cadastro", "Login", "Sair"};
-        String[] opcoesLogin = {"Boletim", "Testes", "Revisar", "Ranking", "Psicologia", "Sair"};
+        String[] opcoesLogin = {"Boletim", "Testes", "Revisões", "Ranking", "Psicologia", "Sair"};
+        String[] opcoesLoginProfessor = {"Média alunos", "Testes Alunos", "Revisões", "Ranking Alunos", "Psicologia", "Sair"};
         boolean continua= true;
         boolean loginSucesso = false;
 
-        
+        // CONTROLLER
+        BoletimController boletimController = new BoletimController();
+        BoletimProfessorController boletimProfessorController = new BoletimProfessorController();
+        TesteController testeController = new TesteController();
+
+
         LoginDTO lg = new LoginDTO();
         BoletimProfessor blp = new BoletimProfessor();
-        BoletimController boletimController = new BoletimController(); // Adiciona o controller do boletim
-        Teste ts = new Teste();
+        TesteDTO ts = new TesteDTO();
         TestesProfessor tsp = new TestesProfessor();
         Revisar rv = new Revisar();
         RevisarProfessor rp = new RevisarProfessor();
@@ -116,48 +123,98 @@ public class Helena {
                     case 1: // LOGIN
                         try {
                             do {
-                                matricula = Integer.parseInt(JOptionPane.showInputDialog("Digite sua matrícula:"));
-                                senha = JOptionPane.showInputDialog("Digite sua senha:");
-                            
-                                // Envia os dados para o controller
-                                String resultado = helenaController.validarUsuario(matricula, senha);
-
-                                if (resultado.startsWith("Sucesso:")){
-
-                                    nome = resultado.split(":")[1];
-                                    JOptionPane.showMessageDialog(null, "LOGIN REALIZADO COM SUCESSO");
-
-                                    boolean loginContinua = true;
-
-                                    while(loginContinua){
-                                        int opcoes = JOptionPane.showOptionDialog(null, "Bem vindo " + nome + ". Como posso lhe ajudar hoje?", "Tela inicial", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, opcoesLogin, opcoesLogin[0]);
-
-                                        switch (opcoes) {
-                                            case 0: // Boletim
-                                                String[] materias = boletimController.getMaterias(); // Método para obter as matérias
-                                                int materiaEscolhida = JOptionPane.showOptionDialog(null, "Escolha uma matéria:", "Boletim", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, materias, materias[0]);
-
-                                                String boletim = boletimController.mostrarBoletim(materiaEscolhida);
-                                                JOptionPane.showMessageDialog(null, boletim);
-                                                break;
-                                            case 5: // Volta ao inicio OU encerra tudo (a definir)
-                                                JOptionPane.showMessageDialog(null, "Saindo do aplicativo....");
-                                                loginContinua = false;
-                                                //continua = false; // Termina o loop principal após fazer logout
-                                                break;
-                                        
-                                            default:
-                                                throw new Exception("Escolha incorreta");
-                                        }
-                                    }
-                                    loginSucesso = true;
-                                }else if (resultado.equals("Autoridade")) {
-                                    JOptionPane.showMessageDialog(null, "LOGIN REALIZADO COM SUCESSO - USUÁRIO AUTORIDADE");
-                                    loginSucesso = true;
-                                    // Ações para usuário com autoridade
+                                matricula = Integer.parseInt(JOptionPane.showInputDialog("Digite sua matrícula:\nOBS: Digite 0 para voltar a tela inicial!"));
+                                if (matricula == 0) {
                                     break;
-                                }else {
-                                    JOptionPane.showMessageDialog(null, "CREDENCIAIS INVÁLIDAS!" + "\nTente novamente.");
+                                } else {
+                                    senha = JOptionPane.showInputDialog("Digite sua senha:");
+                                    String resultado = helenaController.validarUsuario(matricula, senha);
+                                    if (resultado.startsWith("Sucesso:")){
+
+                                        nome = resultado.split(":")[1];
+                                        JOptionPane.showMessageDialog(null, "LOGIN REALIZADO COM SUCESSO");
+    
+                                        boolean loginContinua = true;
+    
+                                        while(loginContinua){
+                                            int opcoes = JOptionPane.showOptionDialog(null, "Bem vindo " + nome + ". Como posso lhe ajudar hoje?", "Tela inicial", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, opcoesLogin, opcoesLogin[0]);
+    
+                                            switch (opcoes) {
+                                                case 0: // Boletim
+                                                    String[] materias = boletimController.getMaterias();
+                                                    int materiaEscolhida = JOptionPane.showOptionDialog(null, "Escolha uma matéria:", "Boletim", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, materias, materias[0]);
+    
+                                                    String boletim = boletimController.mostrarBoletim(materiaEscolhida);
+                                                    JOptionPane.showMessageDialog(null, boletim);
+                                                    break;
+                                                case 1: // Testes
+                                                    String [] testes = testeController.getTestes();
+                                                    int testeEscolhido = JOptionPane.showOptionDialog(null, "Escolha um teste:", "Testes", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, testes, testes[0]);
+
+                                                    String teste = testeController.mostrarTestes(testeEscolhido);
+                                                    JOptionPane.showMessageDialog(null, teste);
+                                                    break;
+                                                case 2: // Revisões
+
+
+                                                    break;
+                                                case 3: // Ranking
+
+                                                    break;
+                                                case 4: // Psicologia
+
+                                                    break;
+                                                case 5: // Volta ao inicio OU encerra tudo (a definir)
+                                                    JOptionPane.showMessageDialog(null, "Fazendo logout....");
+                                                    loginContinua = false;
+                                                    break;
+                                                default:
+                                                    throw new Exception("Escolha incorreta");
+                                            }
+                                        }
+                                        loginSucesso = true;
+                                    }else if (resultado.startsWith("Autoridade:")) {
+                                        nome = resultado.split(":")[1];
+                                        JOptionPane.showMessageDialog(null, "LOGIN REALIZADO COM SUCESSO");
+    
+                                        boolean loginContinua = true;
+
+                                        while (loginContinua) {
+                                            int opcoes = JOptionPane.showOptionDialog(null, "Bem vindo Professor(a) " + nome + ". Como posso lhe ajudar hoje?", "Tela inicial", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, opcoesLoginProfessor, opcoesLoginProfessor[0]);
+
+                                            switch (opcoes) {
+                                                case 0: //media
+                                                    String[] materias = boletimProfessorController.getMaterias();
+                                                    int materiaEscolhida = JOptionPane.showOptionDialog(null, "Escolha uma matéria:", "Boletim", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, materias, materias[0]);
+
+                                                    String medias = boletimProfessorController.mostrarBoletimProfessor(materiaEscolhida);
+                                                    JOptionPane.showMessageDialog(null, medias);
+                                                    break;
+                                                case 1:
+                                                
+                                                    break;
+                                                case 2:
+
+                                                    break;
+                                                case 3:
+
+                                                    break;
+                                                case 4:
+
+                                                    break;
+                                                case 5:
+                                                    JOptionPane.showMessageDialog(null, "Fazendo logout....");
+                                                    loginContinua = false;
+                                                    break;
+                                            
+                                                default:
+                                                    throw new Exception("Escolha incorreta");
+                                            }
+                                        }
+                                        loginSucesso = true;
+                                    }else {
+                                        JOptionPane.showMessageDialog(null, "CREDENCIAIS INVÁLIDAS!" + "\nTente novamente.");
+                                    }
                                 }
                             } while (!loginSucesso);
                         } catch (Exception e) {

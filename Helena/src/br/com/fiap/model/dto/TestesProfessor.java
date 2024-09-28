@@ -1,6 +1,6 @@
 package br.com.fiap.model.dto;
 
-public class TestesProfessor extends Teste{
+public class TestesProfessor extends TesteDTO{
     public TestesProfessor(){}
 
     public String[] testes(){

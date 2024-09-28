@@ -13,6 +13,8 @@ public class BoletimController {
         return boletim.getMaterias();
     }
 
+// Proxima implementação de boletiim: Fazer com que o professor adicione as notas para cada aluno
+
     public String mostrarBoletim(int opcao) {
         switch (opcao) {
             case 0:

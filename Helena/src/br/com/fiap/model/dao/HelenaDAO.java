@@ -73,4 +73,8 @@ public class HelenaDAO {
             return "Erro de SQL: " + e.getMessage();
         }
     }
+    //  READ PARA MOSTRAR LISTA DOS ALUNOS PARA O PROFESSOR
+    // LOGO EM SEGUIDA O PROFESSOR ESCOLHER SE QUER EXCLUIR ALGUM ALUNO
+    // UPDATE DE APELIDO, EMAIL, SENHA
+
 }
