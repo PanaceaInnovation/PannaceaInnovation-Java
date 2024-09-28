@@ -2,6 +2,7 @@ package br.com.fiap.view;
 
 import java.sql.Connection;
 import javax.swing.JOptionPane;
+import java.util.ArrayList;
 
 import br.com.fiap.controller.BoletimController;
 import br.com.fiap.controller.BoletimProfessorController;
@@ -26,7 +27,7 @@ public class Helena {
         String nome, apelido, cpf, email, senha;
         int matricula, autoridade;
         String[] escolhas = {"Cadastro", "Login", "Sair"};
-        String[] opcoesLogin = {"Boletim", "Testes", "Revisões", "Ranking", "Psicologia", "Sair"};
+        String[] opcoesLogin = {"Boletim", "Testes", "Revisões", "Ranking", "Psicologia", "Conta", "Sair"};
         String[] opcoesLoginProfessor = {"Média alunos", "Testes Alunos", "Revisões", "Ranking Alunos", "Psicologia", "Administrar Alunos","Sair"};
         boolean continua= true;
         boolean loginSucesso = false;
@@ -165,7 +166,23 @@ public class Helena {
                                                     String atendimento = psicologiaController.mostraPsicologos(psicologoEscolhido);
                                                     JOptionPane.showMessageDialog(null, atendimento);
                                                     break;
-                                                case 5: // Volta ao inicio
+                                                case 5: 
+                                                    UsuarioDTO usuario = helenaController.consultarDadosUsuario(matricula);
+                                                    apelido = usuario.getApelido();
+                                                    email = usuario.getEmail();
+                                                
+                                                    String apelidoAtual = JOptionPane.showInputDialog(null, "Digite seu novo apelido ou deixe em branco para manter: ", apelido);
+                                                    String emailAtual = JOptionPane.showInputDialog(null, "Digite seu novo email ou deixe em branco para manter: ", email);
+                                                    String novaSenha = JOptionPane.showInputDialog(null, "Digite sua nova senha ou deixe em branco para manter:");
+                                                
+                                                    String apelidoFinal = apelidoAtual.isEmpty() ? apelido : apelidoAtual;
+                                                    String emailFinal = emailAtual.isEmpty() ? email : emailAtual;
+                                                    String senhaFinal = novaSenha.isEmpty() ? senha : novaSenha;
+                                                
+                                                    String resultadoAtualizacao = helenaController.atualizarUsuario(matricula, apelidoFinal, emailFinal, senhaFinal);
+                                                    JOptionPane.showMessageDialog(null, resultadoAtualizacao);
+                                                    break;
+                                                case 6: // Volta ao inicio
                                                     JOptionPane.showMessageDialog(null, "Fazendo logout....");
                                                     loginContinua = false;
                                                     break;
@@ -217,7 +234,42 @@ public class Helena {
                                                     JOptionPane.showMessageDialog(null, atendimento);
                                                     break;
                                                 case 5: // Administrar alunos
+                                                    try {
+                                                        ArrayList<UsuarioDTO> alunos = helenaController.listarAlunos();
+                                                        if (alunos.isEmpty()) {
+                                                            JOptionPane.showMessageDialog(null, "Não há alunos cadastrados.");
+                                                        } else {
+                                                            String[] opcoesAlunos = new String[alunos.size() + 1];
+                                                            for (int i = 0; i < alunos.size(); i++) {
+                                                                opcoesAlunos[i] = alunos.get(i).getNome() + " - Matrícula: " + alunos.get(i).getMatricula();
+                                                            }
+                                                            // Adicionando a opção para apenas visualizar os alunos
+                                                            opcoesAlunos[alunos.size()] = "Apenas visualizar alunos";
 
+                                                            int escolha = JOptionPane.showOptionDialog(null, "Escolha um aluno para excluir ou apenas visualizar:", "Administrar Alunos", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, opcoesAlunos, opcoesAlunos[0]);
+                                                            
+                                                            if (escolha != -1 && escolha != alunos.size()) { // Se a opção não for "Apenas visualizar"
+                                                                int matriculaAluno = alunos.get(escolha).getMatricula();
+                                                                int confirmacao = JOptionPane.showConfirmDialog(null, "Você realmente deseja excluir o aluno " + alunos.get(escolha).getNome() + "?");
+
+                                                                if (confirmacao == JOptionPane.YES_OPTION) {
+                                                                    String resultadoExclusao = helenaController.excluirAluno(matriculaAluno);
+                                                                    JOptionPane.showMessageDialog(null, resultadoExclusao);
+                                                                } else {
+                                                                    JOptionPane.showMessageDialog(null, "Nenhum aluno foi excluído.");
+                                                                }
+                                                            } else {
+                                                                // O professor optou por apenas visualizar os alunos
+                                                                StringBuilder listaAlunos = new StringBuilder("Alunos da sala:\n");
+                                                                for (UsuarioDTO aluno : alunos) {
+                                                                    listaAlunos.append(aluno.getNome()).append(" - Matrícula: ").append(aluno.getMatricula()).append("\n");
+                                                                }
+                                                                JOptionPane.showMessageDialog(null, listaAlunos.toString());
+                                                            }
+                                                        }
+                                                    } catch (Exception e) {
+                                                        JOptionPane.showMessageDialog(null, "Erro ao administrar alunos: " + e.getMessage());
+                                                    }
                                                     break;
                                                 case 6:
                                                     JOptionPane.showMessageDialog(null, "Fazendo logout....");
@@ -238,161 +290,6 @@ public class Helena {
                             JOptionPane.showMessageDialog(null, "Erro: " + e.getMessage());
                         }
                         break;
-                        
-                        /*
-                        System.out.println("login");
-
-                        do {
-                            lg.setVerificaMatricula(cd.getMatricula());
-                            lg.setVerificaSenha(cd.getSenha());
-
-                            lgMatricula = Integer.parseInt(JOptionPane.showInputDialog("Digite sua matrícula: "));
-
-                            lgSenha = JOptionPane.showInputDialog("Digite sua senha:");
-
-                            if(lg.validaLogin(lgMatricula, lgSenha)){
-                                JOptionPane.showMessageDialog(null, "LOGIN REALIZADO COM SUCESSO");
-                                if(cd.getAutoridade() == 1){
-                                    do {                                    
-                                        int opcoes = JOptionPane.showOptionDialog(null, "Bem vindo " + cd.getNome()+ ". Como posso lhe ajudar hoje?","Tela inicial", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, opcoesLogin, opcoesLogin[0]);
-
-                                        switch (opcoes) {
-                                            case 0:
-                                                int opcaoPF = JOptionPane.showOptionDialog(null, "Quais notas gostaria de ver:","Tela inicial", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, blp.materias(), blp.materias()[0]);
-
-                                                switch (opcaoPF) {
-                                                    case 0:
-                                                        String materia1 = ("Média dos alunos em anatomia e Fisiologia Aplicadas à Laparoscopia\n" + "Vitor Hugo: 5.70 - Felipe Arnus: 9.5 - Leticia Resina: 7.7 - João Vieira: 10 - João Chambrone: 7.0");
-                                                        JOptionPane.showMessageDialog(null, materia1);
-                                                        break;
-
-                                                    case 1:
-                                                        String materia2 = ("Média dos alunos em Fundamentos da Cirurgia Laparoscópica\n" + "Vitor Hugo: 8.0 - Felipe Arnus: 6.5 - Leticia Resina: 10 - João Vieira: 4.6 - João Chambrone: 8.5");
-                                                        JOptionPane.showMessageDialog(null, materia2);
-                                                        break;
-                                                    case 2:
-                                                        String materia3 = ("Média dos alunos em equipamentos e Instrumentação\n" + "Vitor Hugo: 7.6 - Felipe Arnus: 5.5 - Leticia Resina: 9.8 - João Vieira: 6.5 - João Chambrone: 9.5");
-                                                        JOptionPane.showMessageDialog(null, materia3);
-                                                        break;
-                                                    case 3:
-                                                        String materia4 = ("Média dos alunos em técnicas Básicas de Laparoscopia\n" + "Vitor Hugo: 8.0 - Felipe Arnus: 10 - Leticia Resina: 10 - João Vieira: 6.6 - João Chambrone: 9.5");
-                                                        JOptionPane.showMessageDialog(null, materia4);
-                                                        break;
-                                                    default:
-                                                        String erro = "5 Escolha incorreta";
-                                                        System.out.println(erro);}
-                                                break;
-                                            
-                                            case 1:
-                                                int opcaoTSP = JOptionPane.showOptionDialog(null, "Quais testes gostaria de ver:","Tela inicial", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, tsp.testes(), tsp.testes()[0]);
-
-                                                switch (opcaoTSP) {
-                                                    case 0:
-                                                        String teste1 = ("Testes dos alunos em Procedimentos Laparoscópicos Comuns\n" + "Vitor Hugo: A1: Concluído - A2: Concluído - A3: Concluído \nFelipe Arnus: A1: Pendente - A2: Pendente - A3: Concluído \nLeticia Resina: A1: Concluído - A2: Pendente - A3: Concluído \nJoão Vieira: A1: Pendente - A2: Pendente - A3: Concluído \nJoão Chambrone: A1: Concluído - A2: Concluído - A3: Pendente");
-                                                        JOptionPane.showMessageDialog(null, teste1);
-                                                        break;
-                                                    case 1:
-                                                        String teste2 = ("Testes dos alunos em Complicações e Gestão de Riscos\n" + "Vitor Hugo: A1: Concluído - A2: Concluído - A3: Concluído \nFelipe Arnus: A1: Pendente - A2: Pendente - A3: Concluído \nLeticia Resina: A1: Concluído - A2: Pendente - A3: Concluído \nJoão Vieira: A1: Pendente - A2: Pendente - A3: Concluído \nJoão Chambrone: A1: Concluído - A2: Concluído - A3: Pendente");
-                                                        JOptionPane.showMessageDialog(null, teste2);
-                                                        break;
-                                                    case 2:
-                                                        String teste3 = ("Testes dos alunos em Treinamento em Simuladores e Prática em Laboratório\n" + "Vitor Hugo: A1: Concluído - A2: Concluído - A3: Concluído \nFelipe Arnus: A1: Pendente - A2: Pendente - A3: Concluído \nLeticia Resina: A1: Concluído - A2: Pendente - A3: Concluído \nJoão Vieira: A1: Pendente - A2: Pendente - A3: Concluído \nJoão Chambrone: A1: Concluído - A2: Concluído - A3: Pendente");
-                                                        JOptionPane.showMessageDialog(null, teste3);
-                                                        break;
-                                                    default:
-                                                        String erro = "Escolha incorreta";
-                                                        System.out.println(erro);}
-                                                break; // NECESSARIO ESSE BREAK PARA NÃO FINALIZAR O APP E VOLTAR AS OPÇOES INICIAIS DO LOGIN
-
-                                            case 2:
-                                                int opcaoRevisao = JOptionPane.showOptionDialog(null, "Selecione a opção de revisão que deseja ver:", "Tela de Revisão", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, rp.materias(), rp.materias()[0]);
-
-                                                switch (opcaoRevisao) {
-                                                    case 0:
-                                                        String revisaoMateria1 = rp.mostrarRevisaoProfessor();
-                                                        JOptionPane.showMessageDialog(null, revisaoMateria1);
-                                                        break;
-                                                
-                                                    case 1:
-                                                        String revisaoMateria2 = rp.mostrarRevisaoProfessor();
-                                                        JOptionPane.showMessageDialog(null, revisaoMateria2);
-                                                        break;
-                                                
-                                                    case 2:
-                                                        String revisaoMateria3 = rp.mostrarRevisaoProfessor();
-                                                        JOptionPane.showMessageDialog(null, revisaoMateria3);
-                                                        break;
-                                                
-                                                    case 3:
-                                                        String revisaoMateria4 = rp.mostrarRevisaoProfessor();
-                                                        JOptionPane.showMessageDialog(null, revisaoMateria4);
-                                                        break;
-                                                
-                                                    default:
-                                                        JOptionPane.showMessageDialog(null, "Escolha incorreta");}
-
-                                                break; // NECESSARIO ESSE BREAK PARA NÃO FINALIZAR O APP E VOLTAR AS OPÇOES INICIAIS DO LOGIN
-
-                                            case 3:
-                                                String rankingAlunos = rk.mostrarRanking();
-                                                JOptionPane.showMessageDialog(null, rankingAlunos);
-
-                                                break; // NECESSARIO ESSE BREAK PARA NÃO FINALIZAR O APP E VOLTAR AS OPÇOES INICIAIS DO LOGIN
-
-                                            case 4:
-                                                JOptionPane.showMessageDialog(null, ps.exibePsicologos()); 
-
-                                                break; // NECESSARIO ESSE BREAK PARA NÃO FINALIZAR O APP E VOLTAR AS OPÇOES INICIAIS DO LOGIN
-
-                                            case 5:
-                                                JOptionPane.showMessageDialog(null, "Saindo do aplicativo....");
-                                                continua = false; // Se tirar isso entra em loop
-                                                break; // sem isso aparece escolha incorreta
-                                            default:
-                                                throw new Exception("Escolha incorreta");
-                                        }
-                                    } while (continua);
-                                }else{
-                                    do { 
-
-                                        int opcoes = JOptionPane.showOptionDialog(null, "Bem vindo " + cd.getNome()+ ".Como posso lhe ajudar hoje?","Tela inicial", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, opcoesLogin, opcoesLogin[0]);
-
-                                        switch (opcoes) {
-                                            case 0:
-                                                JOptionPane.showMessageDialog(null,boletimController.mostrarBoletim());
-                                                break;
-                                            case 1:
-                                                JOptionPane.showMessageDialog(null, ts.mostrarTestes());
-                                                break;
-                                            case 2:
-                                                JOptionPane.showMessageDialog(null, rv.mostrarRevisao());
-                                                break;
-                                            case 3:
-                                                String rankingAlunos = rk.mostrarRanking();
-                                                JOptionPane.showMessageDialog(null, rankingAlunos);
-                                                break; 
-                                            
-                                            case 4:
-                                                JOptionPane.showMessageDialog(null, ps.exibePsicologos());
-                                                break;
-
-                                            case 5:
-                                                JOptionPane.showMessageDialog(null, "Saindo do aplicativo....");
-                                                continua = false; // Se tirar isso entra em loop
-                                                break; // sem isso aparece escolha incorreta
-                                            default:
-                                                throw new Exception("Escolha incorreta");
-                                        }
-                                    } while (continua);
-                                }
-                                break;
-                            }else{
-                                JOptionPane.showMessageDialog(null, "CREDENCIAIS INVÁLIDAS!");
-                                break;
-                            }               
-                        }while(true);
-                        break;
-                    */
                     case 2:
                         JOptionPane.showMessageDialog(null, "Saindo do aplicativo....");
                         continua = false; // Se tirar isso entra em loop
