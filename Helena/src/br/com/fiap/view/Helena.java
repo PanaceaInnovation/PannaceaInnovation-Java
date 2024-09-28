@@ -243,7 +243,6 @@ public class Helena {
                                                             for (int i = 0; i < alunos.size(); i++) {
                                                                 opcoesAlunos[i] = alunos.get(i).getNome() + " - Matrícula: " + alunos.get(i).getMatricula();
                                                             }
-                                                            // Adicionando a opção para apenas visualizar os alunos
                                                             opcoesAlunos[alunos.size()] = "Apenas visualizar alunos";
 
                                                             int escolha = JOptionPane.showOptionDialog(null, "Escolha um aluno para excluir ou apenas visualizar:", "Administrar Alunos", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, opcoesAlunos, opcoesAlunos[0]);
@@ -292,8 +291,8 @@ public class Helena {
                         break;
                     case 2:
                         JOptionPane.showMessageDialog(null, "Saindo do aplicativo....");
-                        continua = false; // Se tirar isso entra em loop
-                        break; // sem isso aparece escolha incorreta
+                        continua = false;
+                        break;
                     default:
                         throw new Exception("Escolha incorreta");
                 }
