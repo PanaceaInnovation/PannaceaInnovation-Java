@@ -1,8 +1,8 @@
 package br.com.fiap.model.dto;
 
-public class BoletimProfessor extends BoletimDTO {
+public class BoletimProfessorDTO extends BoletimDTO {
     
-    public BoletimProfessor() {}
+    public BoletimProfessorDTO() {}
 
     public String[] materias(){
         return super.getMaterias();

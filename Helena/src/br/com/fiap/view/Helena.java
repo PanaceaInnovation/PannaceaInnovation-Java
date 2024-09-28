@@ -9,7 +9,9 @@ import br.com.fiap.controller.HelenaController;
 import br.com.fiap.controller.PsicologiaController;
 import br.com.fiap.controller.RankingController;
 import br.com.fiap.controller.RevisarController;
+import br.com.fiap.controller.RevisarProfessorController;
 import br.com.fiap.controller.TesteController;
+import br.com.fiap.controller.TestesProfessorController;
 import br.com.fiap.model.dao.ConnectionFactory;
 import br.com.fiap.model.dto.UsuarioDTO;
 
@@ -34,9 +36,9 @@ public class Helena {
         BoletimController boletimController = new BoletimController();
         BoletimProfessorController boletimProfessorController = new BoletimProfessorController();
         TesteController testeController = new TesteController();
-
+        TestesProfessorController testesProfessorController = new TestesProfessorController();
         RevisarController revisarController = new RevisarController();
-
+        RevisarProfessorController revisarProfessorController = new RevisarProfessorController();
         RankingController rankingController = new RankingController();
         PsicologiaController psicologiaController = new PsicologiaController();
          
@@ -189,11 +191,19 @@ public class Helena {
                                                     String medias = boletimProfessorController.mostrarBoletimProfessor(materiaEscolhida);
                                                     JOptionPane.showMessageDialog(null, medias);
                                                     break;
-                                                case 1:
-                                                
-                                                    break;
-                                                case 2:
+                                                case 1: // Testes
+                                                    String[] testes = testesProfessorController.getTestes();
+                                                    int testeEscolhido = JOptionPane.showOptionDialog(null, "Escolha teste para verificar os status:", "Testes", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, testes, testes[0]);
 
+                                                    String testesAlunos = testesProfessorController.mostrarTestesProfessor(testeEscolhido);
+                                                    JOptionPane.showMessageDialog(null, testesAlunos);
+                                                    break;
+                                                case 2: // Revisões
+                                                    String[] revisoes = revisarProfessorController.getTestes();
+                                                    int revisaoEscolhida = JOptionPane.showOptionDialog(null, "Escolha uma materia para verificar os status de revisão:", "Revisões", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, revisoes, revisoes[0]);
+
+                                                    String revisoesAlunos = revisarProfessorController.mostrarRevisoesProfessor(revisaoEscolhida);
+                                                    JOptionPane.showMessageDialog(null, revisoesAlunos);
                                                     break;
                                                 case 3: // Ranking
                                                     String ranking = rankingController.getRanking();

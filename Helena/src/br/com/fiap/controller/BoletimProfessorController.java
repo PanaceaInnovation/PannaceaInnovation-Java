@@ -1,19 +1,18 @@
 package br.com.fiap.controller;
 
-import br.com.fiap.model.dto.BoletimProfessor;
+import br.com.fiap.model.dto.BoletimProfessorDTO;
 
 public class BoletimProfessorController {
-    private BoletimProfessor boletimProfessor;
+    private BoletimProfessorDTO boletimProfessor;
 
     public BoletimProfessorController() {
-        boletimProfessor = new BoletimProfessor();
+        boletimProfessor = new BoletimProfessorDTO();
     }
 
     public String[] getMaterias() {
         return boletimProfessor.materias();
     }
 
-    // Método para o professor ver as notas dos alunos
     public String mostrarBoletimProfessor(int opcaoMateria) {
         return boletimProfessor.getMediaAlunos(opcaoMateria);
     }
